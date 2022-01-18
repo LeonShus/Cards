@@ -9,7 +9,7 @@ export const App = () => {
         <div>
             <SuperInputText/>
             <SuperButton>
-                Click
+
             </SuperButton>
             <SuperCheckbox/>
         </div>
