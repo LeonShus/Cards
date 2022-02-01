@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import {HashRouter, Link, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./components/pages/p1- loginization/l1-login/login-page";
 import {RegistrationPage} from "./components/pages/p1- loginization/l2-registration/registration-page";
 import {ProfilePage} from "./components/pages/p2-profile/profile-page";
@@ -11,7 +11,7 @@ import {TestPage} from "./components/pages/p4-test/test-page";
 
 export const App = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <nav>
                 <Link to={"login"}>Login</Link>
                 <Link to={"registration"}>Registration</Link>
@@ -29,6 +29,6 @@ export const App = () => {
                 <Route path={"error"} element={<Error404Page/>}/>
                 <Route path={"test"} element={<TestPage/>}/>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
