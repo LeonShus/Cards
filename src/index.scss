@@ -1,3 +1,5 @@
+@import "./common/c1-styles/sass/variables";
+
 * {
   margin: 0;
   padding: 0;
@@ -5,5 +7,5 @@
 }
 
 body{
-  background-color: #337ab7;
+  background-color: $mainBackground;
 }

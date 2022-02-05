@@ -11,7 +11,7 @@ import {TestPage} from "./components/pages/p4-test/test-page";
 
 export const App = () => {
     return (
-        <div>
+        <div className={styles.container}>
             <HashRouter>
                 <nav>
                     <Link to={"login"}>Login</Link>
