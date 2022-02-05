@@ -2,15 +2,47 @@ import {Dispatch} from "redux";
 import {authApi} from "../../../../dal/cardsApi";
 
 
-const initState = {}
+const initState = {
+    error: "",
+    isRegistered: false
+}
 
-export const registrationReducer = (state: any = initState, action: any) => {
+type InitStateType = typeof initState
+
+type RegistrationActionType = SetErrorAT | SetIsRegisteredAT
+
+export const registrationReducer = (state: InitStateType = initState, action: RegistrationActionType) => {
     switch (action.type) {
+        case "REGISTRATION-REDUCER/SET-ERROR":
+            return {
+                ...state,
+                error: action.error
+            }
+        case "REGISTRATION-REDUCER/IS-REGISTERED":
+            return {
+                ...state,
+                isRegistered: action.isRegistered
+            }
         default:
             return state
     }
 }
 
+type SetErrorAT = ReturnType<typeof setErrorAC>
+export const setErrorAC = (error: string) => {
+    return{
+        type: "REGISTRATION-REDUCER/SET-ERROR",
+        error
+    } as const
+}
+
+type SetIsRegisteredAT = ReturnType<typeof setIsRegisteredAC>
+export const setIsRegisteredAC = (isRegistered: boolean) => {
+    return{
+        type: "REGISTRATION-REDUCER/IS-REGISTERED",
+        isRegistered
+    } as const
+}
 
 //THUNK
 
@@ -19,4 +51,18 @@ export const testPing = () => (dispatch: Dispatch) => {
         .then(res => {
             console.log(res)
         })
+}
+
+export const registerUser = (email: string, password: string) => async (dispatch: Dispatch<RegistrationActionType>) => {
+    dispatch(setErrorAC(""))
+    try{
+        let res = await authApi.registerUser(email, password)
+        console.log(res)
+
+        dispatch(setIsRegisteredAC(true))
+    }
+    catch (err: any){
+        console.log(err.response.data.error)
+        dispatch(setErrorAC(err.response.data.error))
+    }
 }

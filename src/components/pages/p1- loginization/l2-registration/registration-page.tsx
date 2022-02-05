@@ -1,15 +1,20 @@
 import React, {useEffect} from "react"
 import styles from "./registration.module.scss"
-import {useDispatch} from "react-redux";
-import {testPing} from "../../../bll/b1-reducers/r2-registration/registation-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {registerUser, testPing} from "../../../bll/b1-reducers/r2-registration/registation-reducer";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import SuperInputText from "../../../../common/c2-components/c1-SuperInputText/SuperInputText";
 import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
+import {AppStateType} from "../../../bll/b2-store/store";
+import { Navigate } from "react-router-dom";
 
 export const RegistrationPage = () => {
 
     let dispatch = useDispatch()
+
+    const registrationError = useSelector<AppStateType, string>(state => state.registration.error)
+    const isRegistered = useSelector<AppStateType, boolean>(state => state.registration.isRegistered)
 
     useEffect(() => {
         dispatch(testPing())
@@ -18,29 +23,36 @@ export const RegistrationPage = () => {
     const formik = useFormik({
         initialValues: {
             email: "",
-            pass: "",
-            passConfirm: "",
+            password: "",
+            passwordConfirm: "",
         },
         validationSchema: Yup.object({
             email: Yup.string()
                 .email("Invalid email address")
                 .required("Required"),
-            pass: Yup.string()
-                .min(7, "Min length 7")
+            password: Yup.string()
+                .min(8, "Min length 8")
                 .required("Required"),
-            passConfirm: Yup.string()
-                .oneOf([Yup.ref("pass"), null], "Passwords must match"),
+            passwordConfirm: Yup.string()
+                .oneOf([Yup.ref("password"), null], "Passwords must match"),
         }),
         onSubmit: values => {
-            console.log(values)
+            let {email, password} = values
+            dispatch(registerUser(email, password))
         }
     })
+
+    if(isRegistered){
+        return <Navigate to={"/login"}/>
+    }
 
     return (
         <div className={styles.container}>
             <h2>
                 Sing Up
             </h2>
+
+            {/*Form and form errors*/}
             <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
                 <SuperInputText
                     type={"text"}
@@ -52,24 +64,27 @@ export const RegistrationPage = () => {
 
                 <SuperInputText
                     type={"password"}
-                    {...formik.getFieldProps("pass")}
+                    {...formik.getFieldProps("password")}
                 />
-                {formik.touched.pass && formik.errors.pass ? (
-                    <div className={styles.error}>{formik.errors.pass}</div>
+                {formik.touched.password && formik.errors.password ? (
+                    <div className={styles.error}>{formik.errors.password}</div>
                 ) : null}
 
                 <SuperInputText
                     type={"password"}
-                    {...formik.getFieldProps("passConfirm")}
+                    {...formik.getFieldProps("passwordConfirm")}
                 />
-                {formik.touched.passConfirm && formik.errors.passConfirm ? (
-                    <div className={styles.error}>{formik.errors.passConfirm}</div>
+                {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
+                    <div className={styles.error}>{formik.errors.passwordConfirm}</div>
                 ) : null}
 
                 <SuperButton type={"submit"}>
                     Register
                 </SuperButton>
             </form>
+
+            {/*Request Error*/}
+            {registrationError && <div>{registrationError}</div>}
         </div>
     )
 }
