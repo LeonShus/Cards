@@ -1,13 +1,14 @@
-import React, {useEffect} from "react"
+import React from "react"
 import styles from "./registration.module.scss"
 import {useDispatch, useSelector} from "react-redux";
-import {registerUser, testPing} from "../../../bll/b1-reducers/r2-registration/registation-reducer";
+import {registerUser} from "../../../bll/b1-reducers/r2-registration/registation-reducer";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import SuperInputText from "../../../../common/c2-components/c1-SuperInputText/SuperInputText";
 import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
 import {AppStateType} from "../../../bll/b2-store/store";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 
 export const RegistrationPage = () => {
 
@@ -15,10 +16,9 @@ export const RegistrationPage = () => {
 
     const registrationError = useSelector<AppStateType, string>(state => state.registration.error)
     const isRegistered = useSelector<AppStateType, boolean>(state => state.registration.isRegistered)
+    const isFetching = useSelector<AppStateType, boolean>(state => state.app.isFetching)
 
-    useEffect(() => {
-        dispatch(testPing())
-    }, [])
+    console.log(isFetching)
 
     const formik = useFormik({
         initialValues: {
@@ -42,7 +42,7 @@ export const RegistrationPage = () => {
         }
     })
 
-    if(isRegistered){
+    if (isRegistered) {
         return <Navigate to={"/login"}/>
     }
 
@@ -51,6 +51,8 @@ export const RegistrationPage = () => {
             <h2>
                 Sing Up
             </h2>
+
+            {isFetching && <Preloader/>}
 
             {/*Form and form errors*/}
             <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
@@ -78,7 +80,10 @@ export const RegistrationPage = () => {
                     <div className={styles.error}>{formik.errors.passwordConfirm}</div>
                 ) : null}
 
-                <SuperButton type={"submit"}>
+                <SuperButton
+                    type={"submit"}
+                    disabled={isFetching}
+                >
                     Register
                 </SuperButton>
             </form>
