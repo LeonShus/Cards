@@ -13,7 +13,10 @@ export const RegistrationPage = () => {
 
     return (
         <div className={styles.container}>
-            Registration
+            <h2>
+                Sing Up
+            </h2>
+
         </div>
     )
 }
