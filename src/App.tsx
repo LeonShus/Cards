@@ -21,15 +21,17 @@ export const App = () => {
                     <Link to={"error"}>404</Link>
                     <Link to={"test"}>Test</Link>
                 </nav>
-                <Routes>
-                    <Route path={"login"} element={<LoginPage/>}/>
-                    <Route path={"registration"} element={<RegistrationPage/>}/>
-                    <Route path={"profile"} element={<ProfilePage/>}/>
-                    <Route path={"recovery"} element={<PassRecoveryPage/>}/>
-                    <Route path={"pass"} element={<CreateNewPassPage/>}/>
-                    <Route path={"error"} element={<Error404Page/>}/>
-                    <Route path={"test"} element={<TestPage/>}/>
-                </Routes>
+                <div className={styles.contentContainer}>
+                    <Routes>
+                        <Route path={"login"} element={<LoginPage/>}/>
+                        <Route path={"registration"} element={<RegistrationPage/>}/>
+                        <Route path={"profile"} element={<ProfilePage/>}/>
+                        <Route path={"recovery"} element={<PassRecoveryPage/>}/>
+                        <Route path={"pass"} element={<CreateNewPassPage/>}/>
+                        <Route path={"error"} element={<Error404Page/>}/>
+                        <Route path={"test"} element={<TestPage/>}/>
+                    </Routes>
+                </div>
             </HashRouter>
         </div>
     );

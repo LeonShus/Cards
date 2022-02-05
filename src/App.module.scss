@@ -1,3 +1,9 @@
+@import 'common/c1-styles/sass/mixins';
+
 .container{
-  margin: 10px;
+  border: 2px solid blue;
+  margin: 10px auto;
+  .contentContainer{
+    @include contentBox();
+  }
 }
