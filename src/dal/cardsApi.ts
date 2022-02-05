@@ -6,7 +6,7 @@ const inst = axios.create({
 })
 
 export const authApi = {
-    ping(){
+    ping() {
         return inst.get("ping")
     }
 }
