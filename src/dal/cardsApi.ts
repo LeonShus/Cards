@@ -15,7 +15,7 @@ export const authApi = {
     passwordRecovery(email: string) {
         const message = `<div style="background-color: lime; padding: 15px">
                         password recovery link: 
-                     <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`
+                     <a href='http://localhost:3000/#/pass/$token$'>link</a></div>`
         return instance.post("https://neko-back.herokuapp.com/2.0/auth/forgot", {email, message})
     }
 }
