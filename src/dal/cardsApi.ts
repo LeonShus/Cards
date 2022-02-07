@@ -9,7 +9,10 @@ export const authApi = {
     ping() {
         return instance.get("ping")
     },
-    registerUser(email: string, password: string) {
+    login(email: string, password: string, rememberMe: boolean){
+        return instance.post<LoginRequestType>( "/auth/login",{email, password, rememberMe})
+    },
+    registerUser(email: string, password: string){
         return instance.post<RegisterRequestType>("auth/register", {email, password})
     },
     passwordRecovery(email: string) {
@@ -17,9 +20,24 @@ export const authApi = {
                         password recovery link: 
                      <a href='http://localhost:3000/#/pass/$token$'>link</a></div>`
         return instance.post("https://neko-back.herokuapp.com/2.0/auth/forgot", {email, message})
-    }
+    },
+
 }
 
 type RegisterRequestType = {
     error?: string
+}
+
+type LoginRequestType = {
+    _id: string;
+    email: string;
+    name: string;
+    avatar?: string;
+    publicCardPacksCount: number;
+    created: Date;
+    updated: Date;
+    isAdmin: boolean;
+    verified: boolean;
+    rememberMe: boolean;
+    error?: string;
 }
