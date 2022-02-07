@@ -9,7 +9,6 @@ import SuperInputText from "../../../../common/c2-components/c1-SuperInputText/S
 import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import * as Yup from "yup";
-import mailImg from "../../../../common/images/mail.png"
 
 export const PassRecoveryPage = () => {
     const dispatch = useDispatch()
@@ -30,13 +29,13 @@ export const PassRecoveryPage = () => {
             dispatch(passwordRecovery(values.email))
         }
     })
-    const mail = {
-        backgroundImage: `url(${mailImg})`,
-    };
+    // const mail = {
+    //     backgroundImage: `url(${mailImg})`,
+    // };
     if (isToggleError) {
         return (<div className={styles.forgotPage}>
             <div className={styles.container}>
-                <div className={styles.img} style={mail}> </div>
+                <div className={styles.img}> </div>
                 <h3 className={styles.title}>Check Email</h3>
                 <p className={styles.text}>We’ve sent an Email with instructions to {email}</p>
             </div>
