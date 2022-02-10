@@ -1,6 +1,6 @@
 import React from "react"
 import {useFormik} from "formik";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {passwordRecovery} from "../../../bll/b1-reducers/r3-passwordRecovery/pass-recovery-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
@@ -16,6 +16,8 @@ export const PassRecoveryPage = () => {
     const isFetching = useSelector<AppStateType, boolean>(state => state.app.isFetching)
     const passwordRecoveryError = useSelector<AppStateType, string>((state) => state.passwordRecovery.error)
     const email = useSelector<AppStateType, string>((state) => state.passwordRecovery.email)
+    const isLoggedIn = useSelector<AppStateType, boolean>((state => state.login.isLoggedIn))
+
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -29,9 +31,7 @@ export const PassRecoveryPage = () => {
             dispatch(passwordRecovery(values.email))
         }
     })
-    // const mail = {
-    //     backgroundImage: `url(${mailImg})`,
-    // };
+
     if (isToggleError) {
         return (<div className={styles.forgotPage}>
             <div className={styles.container}>
@@ -40,6 +40,10 @@ export const PassRecoveryPage = () => {
                 <p className={styles.text}>We’ve sent an Email with instructions to {email}</p>
             </div>
         </div>)
+    }
+
+    if (isLoggedIn) {
+        return <Navigate to={"/profile"}/>
     }
 
     return (

@@ -9,6 +9,9 @@ export const authApi = {
     ping() {
         return instance.get("ping")
     },
+    isAuthUser(){
+        return instance.post<LoginRequestType>("auth/me", {})
+    },
     login(email: string, password: string, rememberMe: boolean){
         return instance.post<LoginRequestType>( "/auth/login",{email, password, rememberMe})
     },
