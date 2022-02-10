@@ -9,13 +9,16 @@ export const authApi = {
     ping() {
         return instance.get("ping")
     },
-    isAuthUser(){
+    isAuthUser() {
         return instance.post<LoginRequestType>("auth/me", {})
     },
-    login(email: string, password: string, rememberMe: boolean){
-        return instance.post<LoginRequestType>( "/auth/login",{email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<LoginRequestType>("/auth/login", {email, password, rememberMe})
     },
-    registerUser(email: string, password: string){
+    logout() {
+        return instance.delete("auth/me", {})
+    },
+    registerUser(email: string, password: string) {
         return instance.post<RegisterRequestType>("auth/register", {email, password})
     },
     passwordRecovery(email: string) {

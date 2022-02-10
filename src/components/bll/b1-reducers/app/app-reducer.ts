@@ -52,3 +52,22 @@ export const isAuthUserT = () => async (dispatch: Dispatch) => {
         dispatch(setIsFetchingAC(false))
     }
 }
+
+export const logoutUserT = () => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setIsFetchingAC(true))
+        const res = await authApi.logout()
+        console.log(res)
+        dispatch(setIsLoggedInAC(false))
+        dispatch(setUserDataAC("", "", "", "", 0))
+
+    } catch (e: any) {
+        const error = e.response
+            ? e.response.data.error
+            : e.message + ", more details in the console"
+        console.log("Error: ", {...e})
+        dispatch(setLoginErrorAC(error))
+    } finally {
+        dispatch(setIsFetchingAC(false))
+    }
+}

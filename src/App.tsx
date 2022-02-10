@@ -9,7 +9,7 @@ import {PassRecoveryPage} from "./components/pages/p1- loginization/l3-pass-reco
 import {Error404Page} from "./components/pages/p3-error/error404-page";
 import {TestPage} from "./components/pages/p4-test/test-page";
 import {useDispatch, useSelector} from "react-redux";
-import {isAuthUserT} from "./components/bll/b1-reducers/app/app-reducer";
+import {isAuthUserT, logoutUserT} from "./components/bll/b1-reducers/app/app-reducer";
 import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import SuperButton from "./common/c2-components/c2-SuperButton/SuperButton";
@@ -18,17 +18,18 @@ export const App = () => {
 
     const dispatch = useDispatch()
     const isFetching = useSelector<AppStateType, boolean>(state => state.app.isFetching)
+    const isLoggedIn = useSelector<AppStateType, boolean>((state => state.login.isLoggedIn))
 
     useEffect(() => {
         dispatch(isAuthUserT())
     }, [])
 
-    if(isFetching){
+    if (isFetching) {
         return <Preloader/>
     }
 
     const logout = () => {
-
+        dispatch(logoutUserT())
     }
 
     return (
@@ -45,9 +46,11 @@ export const App = () => {
                 </nav>
 
 
-                <SuperButton onClick={logout}>
-                    Logout
-                </SuperButton>
+                {
+                    isLoggedIn && <SuperButton onClick={logout}>
+                        Logout
+                    </SuperButton>
+                }
 
                 <div className={styles.contentContainer}>
                     <Routes>
