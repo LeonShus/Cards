@@ -43,11 +43,11 @@ export const PassRecoveryPage = () => {
     }
 
     return (
-        <div className={styles.forgotPage}>
+        <div className={styles.container}>
             {isFetching && <Preloader/>}
-            <div className={styles.container}>
+            <div className={styles.formContainer}>
 
-                <h3 className={styles.title}>Forgot your password?</h3>
+                <h2>Forgot your password?</h2>
 
                 <form onSubmit={formik.handleSubmit} className={styles.form}>
                     <SuperInputText
@@ -57,7 +57,7 @@ export const PassRecoveryPage = () => {
                     {formik.touched.email && formik.errors.email ? (
                         <div className={styles.error}>{formik.errors.email}</div>
                     ) : null}
-                    <p className={styles.emailText}>Enter your email address and we will send you further
+                    <p>Enter your email address and we will send you further
                         instructions </p>
                     <div className={styles.block}>
                         <SuperButton
