@@ -40,19 +40,17 @@ const setEmailAC = (email: string) => ({type: "PASSWORD-RECOVERY-REDUCER/SET-EMA
 
 
 export const passwordRecovery = (email: string) => (dispatch: Dispatch) => {
-
+    dispatch(setIsFetchingAC(true))
     authApi.passwordRecovery(email)
-        .then((res)=>{
-            debugger
-            dispatch(setIsFetchingAC(true))
+        .then((res) => {
             dispatch(setEmailAC(email))
-            dispatch(setIsFetchingAC(false))
             dispatch(isToggleErrorAC(true))
         })
-        .catch((err:any)=>{
+        .catch((err: any) => {
             dispatch(setErrorAC(err.response.data.error))
+            dispatch(setEmailAC(err.response.data.email))
         })
-        .finally(()=>{
+        .finally(() => {
             dispatch(setIsFetchingAC(false))
         })
 

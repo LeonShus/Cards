@@ -20,7 +20,7 @@ export const PassRecoveryPage = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: "",
+            email: email,
         },
         validationSchema: Yup.object({
             email: Yup.string()
@@ -56,6 +56,7 @@ export const PassRecoveryPage = () => {
                 <form onSubmit={formik.handleSubmit} className={styles.form}>
                     <SuperInputText
                         type={"text"}
+                        placeholder={'Email'}
                         {...formik.getFieldProps("email")}
                     />
                     {formik.touched.email && formik.errors.email ? (
