@@ -39,7 +39,7 @@ export const App = () => {
                     <Link to={"login"}>Login</Link>
                     <Link to={"registration"}>Registration</Link>
                     <Link to={"recovery"}>Recovery pass</Link>
-                    <Link to={"pass"}>New Pass</Link>
+                    <Link to={"new-pass"}>New Pass</Link>
                     <Link to={"error"}>404</Link>
                     <Link to={"test"}>Test</Link>
                     <Link to={"profile"}>Profile</Link>
@@ -58,7 +58,7 @@ export const App = () => {
                         <Route path={"registration"} element={<RegistrationPage/>}/>
                         <Route path={"profile"} element={<ProfilePage/>}/>
                         <Route path={"recovery"} element={<PassRecoveryPage/>}/>
-                        <Route path={"pass/:token"} element={<CreateNewPassPage/>}/>
+                        <Route path={"new-pass/:token"} element={<CreateNewPassPage/>}/>
                         <Route path={"error"} element={<Error404Page/>}/>
                         <Route path={"test"} element={<TestPage/>}/>
                     </Routes>
