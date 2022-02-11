@@ -61,6 +61,7 @@ export const PassRecoveryPage = () => {
                     {formik.touched.email && formik.errors.email ? (
                         <div className={styles.error}>{formik.errors.email}</div>
                     ) : null}
+                    {passwordRecoveryError && <div className={styles.error}>{passwordRecoveryError}</div>}
                     <p>Enter your email address and we will send you further
                         instructions </p>
                     <div className={styles.block}>
@@ -73,10 +74,8 @@ export const PassRecoveryPage = () => {
                         <p className={styles.text}>Did you remember your password?</p>
                         <Link className={styles.link} to="/login">Try logging in</Link>
                     </div>
-
                 </form>
             </div>
-            {passwordRecoveryError && <div>{passwordRecoveryError}</div>}
         </div>
     )
 }
