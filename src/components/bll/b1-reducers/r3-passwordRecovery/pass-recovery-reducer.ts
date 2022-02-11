@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {authApi} from "../../../../dal/cardsApi";
+import {setIsFetchingAC} from "../app/app-reducer";
 
 const initState = {
     error: '',
@@ -38,14 +39,24 @@ const isToggleErrorAC = (isToggleError: boolean) => ({
 const setEmailAC = (email: string) => ({type: "PASSWORD-RECOVERY-REDUCER/SET-EMAIL", email} as const)
 
 
-export const passwordRecovery = (email: string) => async (dispatch: Dispatch) => {
-    try {
-        let res = authApi.passwordRecovery(email)
-        dispatch(setEmailAC(email))
-        dispatch(isToggleErrorAC(true))
-    } catch (err: any) {
-        dispatch(isToggleErrorAC(err.response.data.error))
-    }
+export const passwordRecovery = (email: string) => (dispatch: Dispatch) => {
+
+    authApi.passwordRecovery(email)
+        .then((res)=>{
+            debugger
+            dispatch(setIsFetchingAC(true))
+            dispatch(setEmailAC(email))
+            dispatch(setIsFetchingAC(false))
+            dispatch(isToggleErrorAC(true))
+        })
+        .catch((err:any)=>{
+            dispatch(setErrorAC(err.response.data.error))
+        })
+        .finally(()=>{
+            dispatch(setIsFetchingAC(false))
+        })
+
+
 }
 
 type setErrorACType = ReturnType<typeof setErrorAC>
