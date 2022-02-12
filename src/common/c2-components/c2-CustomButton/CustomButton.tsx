@@ -1,26 +1,28 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from "react"
-import s from "./CustomButton.module.css"
+import styles from "./CustomButton.module.scss"
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
+// тип пропсов обычной кнопки
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type CustomButtonPropsType = DefaultButtonPropsType & {
-    red?: boolean
+    myStyle?: boolean
 }
 
 export const CustomButton: React.FC<CustomButtonPropsType> = (
     {
-        red, className,
-        ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
+        myStyle, className,
+        ...restProps
     }
 ) => {
-    const finalClassName = `${red ? s.red : s.default} ${className}`
+    const finalClassName = `${myStyle ? myStyle : ""} ${styles.element}`
 
     return (
-        <button
-            className={finalClassName}
+        <div className={styles.btnContainer}>
+            <button
+                className={finalClassName}
 
-            {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
-        />
+                {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
+            />
+        </div>
     )
 }

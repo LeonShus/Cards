@@ -13,6 +13,7 @@ import {isAuthUserT, logoutUserT} from "./components/bll/b1-reducers/app/app-red
 import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import {CustomButton} from "./common/c2-components/c2-CustomButton/CustomButton";
+import {Header} from "./common/c2-components/c6-Header/Header";
 
 export const App = () => {
 
@@ -35,16 +36,8 @@ export const App = () => {
     return (
         <div className={styles.container}>
             <HashRouter>
-                <nav>
-                    <Link to={"login"}>Login</Link>
-                    <Link to={"registration"}>Registration</Link>
-                    <Link to={"recovery"}>Recovery pass</Link>
-                    <Link to={"new-pass"}>New Pass</Link>
-                    <Link to={"error"}>404</Link>
-                    <Link to={"test"}>Test</Link>
-                    <Link to={"profile"}>Profile</Link>
-                </nav>
 
+                <Header/>
 
                 {
                     isLoggedIn && <CustomButton onClick={logout}>

@@ -4,6 +4,11 @@
   border: 2px solid blue;
   margin: 10px auto;
   .contentContainer{
-    @include contentBox();
+    min-height: 100vh;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
