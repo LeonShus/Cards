@@ -8,7 +8,7 @@ export const Navigation = () => {
             <nav>
                 <Link to={"login"}>Login</Link>
                 <Link to={"registration"}>Registration</Link>
-                <Link to={"recovery"}>Recovery pass</Link>
+                <Link to={"password-recovery"}>Recovery pass</Link>
                 <Link to={"new-pass"}>New Pass</Link>
                 <Link to={"error"}>404</Link>
                 <Link to={"test"}>Test</Link>

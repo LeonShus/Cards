@@ -1,4 +1,5 @@
 @import "../../../../common/c1-styles/sass/mixins";
+@import "../../../../common/c1-styles/sass/variables";
 
 .container{
   @include contentBox();
@@ -6,10 +7,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    .error{
-      font-size: .8rem;
-      color: #e30101;
-      margin: 4px 0 10px 0;
-    }
+  }
+  p{
+    margin: 10px 0 10px 0;
+    opacity: 0.6;
+  }
+  .singUp{
+    color: $primaryColor;
+    font-size: 1.2rem;
+  }
+  .forgot{
+    color: $primaryColor;
+    position: relative;
+    left: 90px;
+    top: -20px;
   }
 }

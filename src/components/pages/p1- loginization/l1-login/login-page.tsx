@@ -7,7 +7,7 @@ import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/Custo
 import SuperCheckbox from "../../../../common/c2-components/c3-SuperCheckbox/SuperCheckbox";
 import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import styles from "./login-page.module.scss";
 import * as Yup from "yup";
 import {Title} from "../../../../common/c2-components/c5-Title/Title";
@@ -64,13 +64,20 @@ export const LoginPage = () => {
                     {...formik.getFieldProps("password")}
                     errorMessage={formik.touched.password && formik.errors.password ? formik.errors.password : ""}
                 />
+
+                <Link className={styles.forgot} to={"/password-recovery"}>Forgot Password</Link>
+
                 <SuperCheckbox
                     type={"remember"}
                     {...formik.getFieldProps("remember")}
-                > Remember</SuperCheckbox>
+                >Remember Me</SuperCheckbox>
                 <CustomButton type="submit">Login</CustomButton>
             </form>
             {loginError && <Error error={loginError}/>}
+
+            <p>Don't have an account?</p>
+
+            <Link className={styles.singUp} to={"/registration"}>Sing Up</Link>
         </div>
     )
 }
