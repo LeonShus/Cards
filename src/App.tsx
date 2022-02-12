@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import styles from "./App.module.scss"
-import {HashRouter, Link, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./components/pages/p1- loginization/l1-login/login-page";
 import {RegistrationPage} from "./components/pages/p1- loginization/l2-registration/registration-page";
 import {ProfilePage} from "./components/pages/p2-profile/profile-page";
@@ -12,14 +12,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {isAuthUserT, logoutUserT} from "./components/bll/b1-reducers/app/app-reducer";
 import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
-import {CustomButton} from "./common/c2-components/c2-CustomButton/CustomButton";
 import {Header} from "./common/c2-components/c6-Header/Header";
 
 export const App = () => {
 
     const dispatch = useDispatch()
     const isFetching = useSelector<AppStateType, boolean>(state => state.app.isFetching)
-    const isLoggedIn = useSelector<AppStateType, boolean>((state => state.login.isLoggedIn))
 
     useEffect(() => {
         dispatch(isAuthUserT())
@@ -29,21 +27,13 @@ export const App = () => {
         return <Preloader/>
     }
 
-    const logout = () => {
-        dispatch(logoutUserT())
-    }
+
 
     return (
         <div className={styles.container}>
             <HashRouter>
 
                 <Header/>
-
-                {
-                    isLoggedIn && <CustomButton onClick={logout}>
-                        Logout
-                    </CustomButton>
-                }
 
                 <div className={styles.contentContainer}>
                     <Routes>
