@@ -61,7 +61,7 @@ export const CreateNewPassPage = () => {
 
                 <CustomButton
                     type={"submit"}
-                    // disabled={isFetching}
+                    disabled={isFetching}
                 >
                     Register
                 </CustomButton>

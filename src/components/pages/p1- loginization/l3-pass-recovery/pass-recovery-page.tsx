@@ -10,6 +10,7 @@ import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/Cus
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import * as Yup from "yup";
 import { Title } from "../../../../common/c2-components/c5-Title/Title";
+import {Error} from "../../../../common/c2-components/c8-Error/Error";
 
 export const PassRecoveryPage = () => {
     const dispatch = useDispatch()
@@ -63,7 +64,7 @@ export const PassRecoveryPage = () => {
                         {...formik.getFieldProps("email")}
                     />
 
-                    {passwordRecoveryError && <div className={styles.error}>{passwordRecoveryError}</div>}
+                    {passwordRecoveryError && <Error error={passwordRecoveryError}/>}
                     <p>Enter your email address and we will send you further
                         instructions </p>
                     <div className={styles.block}>

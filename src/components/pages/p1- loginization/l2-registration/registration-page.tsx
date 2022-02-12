@@ -10,6 +10,7 @@ import {AppStateType} from "../../../bll/b2-store/store";
 import {Navigate} from "react-router-dom";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import { Title } from "../../../../common/c2-components/c5-Title/Title";
+import {Error} from "../../../../common/c2-components/c8-Error/Error";
 
 export const RegistrationPage = () => {
 
@@ -93,7 +94,7 @@ export const RegistrationPage = () => {
             </form>
 
             {/*Request Error*/}
-            {registrationError && <div>{registrationError}</div>}
+            {registrationError && <Error error={registrationError}/>}
         </div>
     )
 }

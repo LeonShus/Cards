@@ -11,6 +11,7 @@ import {Navigate} from "react-router-dom";
 import styles from "./login-page.module.scss";
 import * as Yup from "yup";
 import {Title} from "../../../../common/c2-components/c5-Title/Title";
+import {Error} from "../../../../common/c2-components/c8-Error/Error";
 
 export const LoginPage = () => {
     const isLoggedIn = useSelector<AppStateType, boolean>((state => state.login.isLoggedIn))
@@ -69,7 +70,7 @@ export const LoginPage = () => {
                 > Remember</SuperCheckbox>
                 <CustomButton type="submit">Login</CustomButton>
             </form>
-            {loginError && <div>{loginError}</div>}
+            {loginError && <Error error={loginError}/>}
         </div>
     )
 }
