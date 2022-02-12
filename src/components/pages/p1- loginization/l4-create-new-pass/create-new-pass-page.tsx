@@ -4,11 +4,12 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import styles from "../l2-registration/registration.module.scss";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
-import SuperInputText from "../../../../common/c2-components/c1-SuperInputText/SuperInputText";
+import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
 import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {setNewPassT} from "../../../bll/b1-reducers/r3-passwordRecovery/pass-recovery-reducer";
+import { Title } from "../../../../common/c2-components/c5-Title/Title";
 
 export const CreateNewPassPage = () => {
 
@@ -39,17 +40,18 @@ export const CreateNewPassPage = () => {
     }
     return (
         <div className={styles.container}>
-            <h2>
-                Recovery password
-            </h2>
+
+            <Title text={"Password recovery"}/>
 
             {isFetching && <Preloader/>}
 
             {/*Form and form errors*/}
             <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
 
-                <SuperInputText
+                <CustomInput
                     type={"password"}
+                    labelText={"new password"}
+                    placeholder={"Password"}
                     {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (

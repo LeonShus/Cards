@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {useFormik} from "formik";
 import {loginTC} from "../../../bll/b1-reducers/r1-login/login-reduser";
-import SuperInputText from "../../../../common/c2-components/c1-SuperInputText/SuperInputText";
+import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
 import SuperCheckbox from "../../../../common/c2-components/c3-SuperCheckbox/SuperCheckbox";
 import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
@@ -48,23 +48,21 @@ export const LoginPage = () => {
             {isFetching && <Preloader/>}
 
             <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
-                <SuperInputText
+                <CustomInput
                     type={"email"}
-                    placeholder={"email"}
+                    placeholder={"Email"}
+                    labelText={"email"}
+                    errorMessage={formik.touched.email && formik.errors.email ? formik.errors.email : ""}
                     {...formik.getFieldProps("email")}
-                />
-                {formik.touched.email && formik.errors.email ? (
-                    <div className={styles.error}>{formik.errors.email}</div>
-                ) : null}
 
-                <SuperInputText
-                    type={"password"}
-                    placeholder={"password"}
-                    {...formik.getFieldProps("password")}
                 />
-                {formik.touched.password && formik.errors.password ? (
-                    <div className={styles.error}>{formik.errors.email}</div>
-                ) : null}
+                <CustomInput
+                    type={"password"}
+                    placeholder={"Password"}
+                    labelText={"password"}
+                    {...formik.getFieldProps("password")}
+                    errorMessage={formik.touched.password && formik.errors.password ? formik.errors.password : ""}
+                />
                 <SuperCheckbox
                     type={"remember"}
                     {...formik.getFieldProps("remember")}
