@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {authApi} from "../../../../dal/cardsApi";
 import {setIsLoggedInAC, setLoginErrorAC, setUserDataAC} from "../r1-login/login-reduser";
+import {resError} from "../Errors";
 
 
 const initState = {
@@ -43,9 +44,7 @@ export const isAuthUserT = () => async (dispatch: Dispatch) => {
             dispatch(setUserDataAC(_id, email, name, avatar, publicCardPacksCount))
         }
     } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : e.message + ", more details in the console"
+        const error = resError(e)
         console.log("Error: ", error, {...e})
     } finally {
         dispatch(setIsFetchingAC(false))
@@ -61,9 +60,7 @@ export const logoutUserT = () => async (dispatch: Dispatch) => {
         dispatch(setUserDataAC("", "", "", "", 0))
 
     } catch (e: any) {
-        const error = e.response
-            ? e.response.data.error
-            : e.message + ", more details in the console"
+        const error = resError(e)
         console.log("Error: ", error, {...e})
     } finally {
         dispatch(setIsFetchingAC(false))
