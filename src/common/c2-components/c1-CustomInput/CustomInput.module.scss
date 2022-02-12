@@ -1,3 +1,5 @@
+@import "../../c1-styles/sass/variables";
+
 .container {
   margin: 0 40px 25px 40px;
 
@@ -22,7 +24,7 @@
     left: -20px;
 
     &:focus {
-      border: 1px solid blue;
+      border: 1px solid $primaryColor;
       transition: border .3s;
     }
   }
