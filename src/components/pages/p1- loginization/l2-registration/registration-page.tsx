@@ -5,7 +5,7 @@ import {registerUser} from "../../../bll/b1-reducers/r2-registration/registation
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
-import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
+import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {Navigate} from "react-router-dom";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
@@ -84,12 +84,12 @@ export const RegistrationPage = () => {
                     {...formik.getFieldProps("passwordConfirm")}
                 />
 
-                <SuperButton
+                <CustomButton
                     type={"submit"}
                     disabled={isFetching}
                 >
                     Register
-                </SuperButton>
+                </CustomButton>
             </form>
 
             {/*Request Error*/}

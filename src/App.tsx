@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {isAuthUserT, logoutUserT} from "./components/bll/b1-reducers/app/app-reducer";
 import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
-import SuperButton from "./common/c2-components/c2-SuperButton/SuperButton";
+import {CustomButton} from "./common/c2-components/c2-CustomButton/CustomButton";
 
 export const App = () => {
 
@@ -47,9 +47,9 @@ export const App = () => {
 
 
                 {
-                    isLoggedIn && <SuperButton onClick={logout}>
+                    isLoggedIn && <CustomButton onClick={logout}>
                         Logout
-                    </SuperButton>
+                    </CustomButton>
                 }
 
                 <div className={styles.contentContainer}>

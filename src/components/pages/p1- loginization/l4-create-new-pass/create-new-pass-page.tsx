@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import styles from "../l2-registration/registration.module.scss";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
-import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
+import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {setNewPassT} from "../../../bll/b1-reducers/r3-passwordRecovery/pass-recovery-reducer";
@@ -59,12 +59,12 @@ export const CreateNewPassPage = () => {
                 ) : null}
 
 
-                <SuperButton
+                <CustomButton
                     type={"submit"}
                     // disabled={isFetching}
                 >
                     Register
-                </SuperButton>
+                </CustomButton>
             </form>
         </div>
     )

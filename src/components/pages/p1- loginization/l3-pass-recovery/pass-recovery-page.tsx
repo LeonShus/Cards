@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import styles from "./passwordRecovery.module.scss"
 import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
-import SuperButton from "../../../../common/c2-components/c2-SuperButton/SuperButton";
+import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import * as Yup from "yup";
 import { Title } from "../../../../common/c2-components/c5-Title/Title";
@@ -67,12 +67,12 @@ export const PassRecoveryPage = () => {
                     <p>Enter your email address and we will send you further
                         instructions </p>
                     <div className={styles.block}>
-                        <SuperButton
+                        <CustomButton
                             type={"submit"}
                             disabled={isFetching}
                         >
                             Send Instructions
-                        </SuperButton>
+                        </CustomButton>
                         <p className={styles.text}>Did you remember your password?</p>
                         <Link className={styles.link} to="/login">Try logging in</Link>
                     </div>
