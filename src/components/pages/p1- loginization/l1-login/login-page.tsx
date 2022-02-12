@@ -10,6 +10,7 @@ import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader
 import {Navigate} from "react-router-dom";
 import styles from "./login-page.module.scss";
 import * as Yup from "yup";
+import {Title} from "../../../../common/c2-components/c5-Title/Title";
 
 export const LoginPage = () => {
     const isLoggedIn = useSelector<AppStateType, boolean>((state => state.login.isLoggedIn))
@@ -41,10 +42,11 @@ export const LoginPage = () => {
     }
     return (
         <div className={styles.container}>
-            <h2>
-                Sing In
-            </h2>
+
+            <Title text={"Sing In"}/>
+
             {isFetching && <Preloader/>}
+
             <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
                 <SuperInputText
                     type={"email"}
