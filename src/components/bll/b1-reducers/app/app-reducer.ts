@@ -46,8 +46,7 @@ export const isAuthUserT = () => async (dispatch: Dispatch) => {
         const error = e.response
             ? e.response.data.error
             : e.message + ", more details in the console"
-        console.log("Error: ", {...e})
-        dispatch(setLoginErrorAC(error))
+        console.log("Error: ", error, {...e})
     } finally {
         dispatch(setIsFetchingAC(false))
     }
@@ -65,8 +64,7 @@ export const logoutUserT = () => async (dispatch: Dispatch) => {
         const error = e.response
             ? e.response.data.error
             : e.message + ", more details in the console"
-        console.log("Error: ", {...e})
-        dispatch(setLoginErrorAC(error))
+        console.log("Error: ", error, {...e})
     } finally {
         dispatch(setIsFetchingAC(false))
     }
