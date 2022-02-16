@@ -1,7 +1,7 @@
 @import "../../../../common/c1-styles/sass/mixins";
 
 .container{
-  @include contentBox(column);
+  @include contentBox(column, center, 25px);
   .formContainer{
     display: flex;
     flex-direction: column;
