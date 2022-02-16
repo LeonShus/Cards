@@ -2,6 +2,7 @@
 
 @mixin contentBox($flexDirection, $alignItems, $padding){
   border: 4px solid $primaryColor;
+  margin-top: 20px;
   padding: $padding;
   border-radius: 15px;
   display: flex;
