@@ -26,6 +26,7 @@ type Cards = {
     __v: number
     _id: string
 }
+
 type InitStateType = typeof initState
 type CardsActionType = SetCardsAT
 export const cardsReducer = (state: InitStateType = initState, action: CardsActionType): InitStateType => {
@@ -47,22 +48,6 @@ export const setCards = (cards: Array<Cards>) => {
     } as const
 }
 
-type CreateCardAT = ReturnType<typeof createCard>
-export const createCard = (name: string) => {
-    return {
-        type: "CARD-REDUCER/CREATE-CARD",
-        name,
-    } as const
-}
-
-type deleteCardAT = ReturnType<typeof deleteCard>
-export const deleteCard = (id: string) => {
-    return {
-        type: "CARD-REDUCER/DELETE-CARD",
-        id,
-    } as const
-}
-
 type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
 export const setCardsTC = (cardsPackID: string): ThunkType =>
     dispatch => {
@@ -77,4 +62,10 @@ export const createCardTC = (cardsPack_id: string, question: string, answer: str
     dispatch => {
         cardsApi.createCard(cardsPack_id, question, answer)
             .then(() => dispatch(setCardsTC(cardsPack_id)))
+    }
+
+export const deleteCardTC = (card_id: string): ThunkType =>
+    dispatch => {
+        cardsApi.deleteCard(card_id)
+            .then((res) => dispatch(setCardsTC(res.data.deletedCard.cardsPack_id)))
     }
