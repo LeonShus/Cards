@@ -6,6 +6,7 @@ import {Title} from "../../../common/c2-components/c5-Title/Title";
 import {CustomInput} from "../../../common/c2-components/c1-CustomInput/CustomInput";
 import {CustomButton} from "../../../common/c2-components/c2-CustomButton/CustomButton";
 import {PackTable} from "./p1-list/pack-table";
+import {Paginator} from "../../../common/c2-components/c10-paginator/paginator";
 
 export const PacksList = () => {
 
@@ -39,6 +40,9 @@ export const PacksList = () => {
                 </div>
                 <div className={styles.tableContainer}>
                     <PackTable/>
+                </div>
+                <div className={styles.paginatorContainer}>
+                    <Paginator/>
                 </div>
 
             </div>
