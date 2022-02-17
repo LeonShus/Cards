@@ -151,7 +151,8 @@ export const changePackTC = (packId: string, name: string): ThunkType =>
 //Types
 type InitStateType = typeof initState
 
-type PacksActionType = SetMinCardsInPackAT
+type PacksActionType =
+    SetMinCardsInPackAT
     | SetMaxCardsInPackAT
     | ShowAllCards
     | setCardPacksAT

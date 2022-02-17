@@ -24,9 +24,9 @@ export const cardsReducer = (state: InitStateType = initState, action: CardsActi
                 ...state, page: action.page
             }
         case "CARD-REDUCER/SET-PAGE-COUNT":
-        return {
-            ...state, pageCount: action.pageCount
-        }
+            return {
+                ...state, pageCount: action.pageCount
+            }
         default:
             return state
     }
@@ -57,7 +57,6 @@ export const setCardsPageCount = (pageCount: number) => {
 }
 
 //Thunks
-type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
 export const setCardsTC = (cardsPackID: string): ThunkType =>
     dispatch => {
         cardsApi.getCards(cardsPackID)
@@ -88,9 +87,12 @@ export const changeCardTC = (card_id: string, question: string, answer: string):
 
 //Types
 type InitStateType = typeof initState
-type CardsActionType = SetCardsAT
-    |SetCardsPageAT
-    |SetCardsPageCountAT
+type CardsActionType =
+    SetCardsAT
+    | SetCardsPageAT
+    | SetCardsPageCountAT
+
+type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
 type Cards = {
     answer: string
     question: string
