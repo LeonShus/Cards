@@ -13,6 +13,7 @@ import {isAuthUserT, logoutUserT} from "./components/bll/b1-reducers/app/app-red
 import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import {Header} from "./common/c2-components/c6-Header/Header";
+import { CardsPage } from "./components/pages/p5-cards/CardsPage";
 
 export const App = () => {
 
@@ -44,6 +45,7 @@ export const App = () => {
                         <Route path={"new-pass/:token"} element={<CreateNewPassPage/>}/>
                         <Route path={"error"} element={<Error404Page/>}/>
                         <Route path={"test"} element={<TestPage/>}/>
+                        <Route path={"cards/:id"} element={<CardsPage/>}/>
                     </Routes>
                 </div>
             </HashRouter>
