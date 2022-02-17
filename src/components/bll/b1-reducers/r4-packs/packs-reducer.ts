@@ -10,20 +10,21 @@ const initState = {
         minCardsCount: 0,
         page: 1,
         pageCount: 5,
-        sortPacks: '0updated'
+        sortPacks: "0updated"
     },
     showAllPacks: true
 }
 
 export const packsReducer = (state: InitStateType = initState, action: PacksActionType): InitStateType => {
     switch (action.type) {
-        case "PACKS-REDUCER/SET-MIN-CARDS-IN-PACK":
+        case "PACKS-REDUCER/SET-MIN-MAX-CARDS-IN-PACK":
             return {
-                ...state, settings: {...state.settings, minCardsCount: action.min}
-            }
-        case "PACKS-REDUCER/SET-MAX-CARDS-IN-PACK":
-            return {
-                ...state, settings: {...state.settings, minCardsCount: action.max}
+                ...state,
+                settings: {
+                    ...state.settings,
+                    minCardsCount: action.min,
+                    maxCardsCount: action.max
+                }
             }
         case "PACKS-REDUCER/SET-CARD-PACKS":
             return {
@@ -50,19 +51,12 @@ export const packsReducer = (state: InitStateType = initState, action: PacksActi
     }
 }
 
-type SetMinCardsInPackAT = ReturnType<typeof setMinCardsInPack>
-export const setMinCardsInPack = (min: number) => {
+type SetMinMaxCardsInPackAT = ReturnType<typeof setMinMaxCardsInPack>
+export const setMinMaxCardsInPack = (min: number, max: number) => {
     return {
-        type: "PACKS-REDUCER/SET-MIN-CARDS-IN-PACK",
+        type: "PACKS-REDUCER/SET-MIN-MAX-CARDS-IN-PACK",
         min,
-    } as const
-}
-
-type SetMaxCardsInPackAT = ReturnType<typeof setMaxCardsInPack>
-export const setMaxCardsInPack = (max: number) => {
-    return {
-        type: "PACKS-REDUCER/SET-MAX-CARDS-IN-PACK",
-        max,
+        max
     } as const
 }
 
@@ -111,7 +105,7 @@ export const setCardPacksTC = (): ThunkType =>
     (dispatch, getState) => {
         const state = getState()
         const userId = state.packs.showAllPacks
-            ? ''
+            ? ""
             : state.login.userData._id
         const settings = state.packs.settings
         const {minCardsCount, maxCardsCount, page, pageCount, sortPacks} = settings
@@ -119,13 +113,13 @@ export const setCardPacksTC = (): ThunkType =>
         cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
             .then((res) => {
                     dispatch(setCardPacks(res.data.cardPacks))
-                console.log(res)
+                    console.log(res)
                 }
             )
     }
 
 type  ThunkType = ThunkAction<void, AppStateType, unknown, PacksActionType>
-export const createPackTC = (name: string, deckCover: string = '', privat: boolean): ThunkType =>
+export const createPackTC = (name: string, deckCover: string = "", privat: boolean): ThunkType =>
     dispatch => {
         cardPacksApi.createCardsPack(name, deckCover, privat)
             .then(() => {
@@ -153,8 +147,7 @@ export const changePackTC = (packId: string, name: string): ThunkType =>
 type InitStateType = typeof initState
 
 type PacksActionType =
-    SetMinCardsInPackAT
-    | SetMaxCardsInPackAT
+    SetMinMaxCardsInPackAT
     | ShowAllCards
     | setCardPacksAT
     | SetPageAT
