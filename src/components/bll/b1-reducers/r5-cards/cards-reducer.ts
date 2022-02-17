@@ -4,7 +4,7 @@ import {AppStateType} from "../../b2-store/store";
 import {ThunkAction} from "redux-thunk";
 
 const initState = {
-    cards: [{}],
+    cards: [],
     cardsTotalCount: 3,
     maxGrade: 5,
     minGrade: 0,
@@ -61,7 +61,8 @@ export const setCardsTC = (cardsPackID: string): ThunkType =>
     dispatch => {
         cardsApi.getCards(cardsPackID)
             .then((res) => {
-                    dispatch(setCards(res.data.cardPacks))
+                debugger
+                    dispatch(setCards(res.data.cards))
                 }
             )
     }
@@ -86,14 +87,23 @@ export const changeCardTC = (card_id: string, question: string, answer: string):
     }
 
 //Types
-type InitStateType = typeof initState
+//type InitStateType = typeof initState
+type InitStateType={
+    cards: Array<Cards>,
+    cardsTotalCount: number,
+    maxGrade: number,
+    minGrade: number,
+    page: number,
+    pageCount: number,
+    packUserId: string
+}
 type CardsActionType =
     SetCardsAT
     | SetCardsPageAT
     | SetCardsPageCountAT
 
 type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
-type Cards = {
+export type Cards = {
     answer: string
     question: string
     cardsPack_id: string
