@@ -6,11 +6,14 @@ import {AppStateType} from "../../b2-store/store";
 
 const initState = {
     cardPacks: [{}],
+    settings: {
+        maxCardsCount: 9999,
+        minCardsCount: 0,
+        page: 1,
+        pageCount: 4,
+        sortPacks: '0updated'
+    },
     cardPacksTotalCount: 3,
-    maxCardsCount: 9999,
-    minCardsCount: 0,
-    page: 1,
-    pageCount: 4
 }
 type CardPacks = {
     _id: string
@@ -34,11 +37,11 @@ export const packsReducer = (state: InitStateType = initState, action: PacksActi
     switch (action.type) {
         case "PACKS-REDUCER/SET-MIN-CARDS-IN-PACK":
             return {
-                ...state, minCardsCount: action.min
+                ...state, settings: {...state.settings, minCardsCount: action.min}
             }
         case "PACKS-REDUCER/SET-MAX-CARDS-IN-PACK":
             return {
-                ...state, maxCardsCount: action.max
+                ...state, settings: {...state.settings, minCardsCount: action.max}
             }
         case "PACKS-REDUCER/SET-CARD-PACKS":
             return {
@@ -89,12 +92,9 @@ export const createPackTC = (name: string, deckCover: string = '', privat: boole
             .then(() => {
                 const state = getState()
                 const userId = state.login.userData._id
-                const min = state.packs.minCardsCount
-                const max = state.packs.maxCardsCount
-                const page = state.packs.page
-                const pageCount = state.packs.pageCount
-                //const sortPacks = state.packs.
-                dispatch(setCardPacksTC(userId, min, max, '', page, pageCount))
+                const settings = state.packs.settings
+                const {minCardsCount, maxCardsCount, page, pageCount,sortPacks} = settings
+                dispatch(setCardPacksTC(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount))
             })
     }
 export const deletePackTC = (packId: string): ThunkType =>
@@ -103,11 +103,19 @@ export const deletePackTC = (packId: string): ThunkType =>
             .then(() => {
                 const state = getState()
                 const userId = state.login.userData._id
-                const min = state.packs.minCardsCount
-                const max = state.packs.maxCardsCount
-                const page = state.packs.page
-                const pageCount = state.packs.pageCount
-                //const sortPacks = state.packs.
-                dispatch(setCardPacksTC(userId, min, max, '', page, pageCount))
+                const settings = state.packs.settings
+                const {minCardsCount, maxCardsCount, page, pageCount,sortPacks} = settings
+                dispatch(setCardPacksTC(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount))
+            })
+    }
+export const changePackTC = (packId: string, name: string): ThunkType =>
+    (dispatch, getState) => {
+        cardPacksApi.changeCardsPack(packId, name)
+            .then(() => {
+                const state = getState()
+                const userId = state.login.userData._id
+                const settings = state.packs.settings
+                const {minCardsCount, maxCardsCount, page, pageCount, sortPacks} = settings
+                dispatch(setCardPacksTC(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount))
             })
     }
