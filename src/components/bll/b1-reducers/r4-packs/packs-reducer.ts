@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {cardPacksApi} from "../../../../dal/cardsApi";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../b2-store/store";
@@ -107,6 +106,7 @@ export const setShowAllPacks = (value: boolean) => {
     } as const
 }
 
+//Thunks
 export const setCardPacksTC = (): ThunkType =>
     (dispatch, getState) => {
         const state = getState()
@@ -148,6 +148,16 @@ export const changePackTC = (packId: string, name: string): ThunkType =>
             })
     }
 
+//Types
+type InitStateType = typeof initState
+
+type PacksActionType = SetMinCardsInPackAT
+    | SetMaxCardsInPackAT
+    | ShowAllCards
+    | setCardPacksAT
+    | SetPageAT
+    | SetPageCountAT
+    | SetSortPacksAT
 
 type CardPacks = {
     _id: string
@@ -163,11 +173,3 @@ type CardPacks = {
     updated: string
     __v?: number
 }
-type InitStateType = typeof initState
-type PacksActionType = SetMinCardsInPackAT
-    | SetMaxCardsInPackAT
-    | ShowAllCards
-    | setCardPacksAT
-    | SetPageAT
-    | SetPageCountAT
-    | SetSortPacksAT
