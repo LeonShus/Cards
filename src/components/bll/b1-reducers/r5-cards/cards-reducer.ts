@@ -3,38 +3,30 @@ import {cardsApi} from "../../../../dal/cardsApi";
 import {AppStateType} from "../../b2-store/store";
 import {ThunkAction} from "redux-thunk";
 
-
 const initState = {
     cards: [{}],
     cardsTotalCount: 3,
     maxGrade: 5,
     minGrade: 0,
     page: 1,
+    pageCount: 4,
     packUserId: ''
 }
-type Cards = {
-    answer: string
-    question: string
-    cardsPack_id: string
-    grade: number
-    rating: number
-    shots: number
-    type: string
-    user_id: string
-    created: string
-    updated: string
-    __v: number
-    _id: string
-}
 
-type InitStateType = typeof initState
-type CardsActionType = SetCardsAT
 export const cardsReducer = (state: InitStateType = initState, action: CardsActionType): InitStateType => {
     switch (action.type) {
         case "CARD-REDUCER/SET-CARDS":
             return {
                 ...state, cards: action.cards
             }
+        case "CARD-REDUCER/SET-PAGE":
+            return {
+                ...state, page: action.page
+            }
+        case "CARD-REDUCER/SET-PAGE-COUNT":
+        return {
+            ...state, pageCount: action.pageCount
+        }
         default:
             return state
     }
@@ -45,6 +37,22 @@ export const setCards = (cards: Array<Cards>) => {
     return {
         type: "CARD-REDUCER/SET-CARDS",
         cards,
+    } as const
+}
+
+type SetCardsPageAT = ReturnType<typeof setCardsPage>
+export const setCardsPage = (page: number) => {
+    return {
+        type: "CARD-REDUCER/SET-PAGE",
+        page,
+    } as const
+}
+
+type SetCardsPageCountAT = ReturnType<typeof setCardsPageCount>
+export const setCardsPageCount = (pageCount: number) => {
+    return {
+        type: "CARD-REDUCER/SET-PAGE-COUNT",
+        pageCount,
     } as const
 }
 
@@ -70,11 +78,30 @@ export const deleteCardTC = (card_id: string): ThunkType =>
         cardsApi.deleteCard(card_id)
             .then((res) => dispatch(setCardsTC(res.data.deletedCard.cardsPack_id)))
     }
-export const changeCardTC = (card_id: string, question: string, answer: string ): ThunkType =>
+export const changeCardTC = (card_id: string, question: string, answer: string): ThunkType =>
     dispatch => {
-        cardsApi.changeCard(card_id,question,answer )
+        cardsApi.changeCard(card_id, question, answer)
             .then((res) => {
                 dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
             })
     }
 
+//Types
+type InitStateType = typeof initState
+type CardsActionType = SetCardsAT
+    |SetCardsPageAT
+    |SetCardsPageCountAT
+type Cards = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    rating: number
+    shots: number
+    type: string
+    user_id: string
+    created: string
+    updated: string
+    __v: number
+    _id: string
+}
