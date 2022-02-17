@@ -4,12 +4,12 @@ import {AppStateType} from "../../b2-store/store";
 
 
 const initState = {
-    cardPacks: [{}],
+    cardPacks: [] as CardPacks[],
     settings: {
-        maxCardsCount: 9999,
+        maxCardsCount: 999,
         minCardsCount: 0,
         page: 1,
-        pageCount: 4,
+        pageCount: 5,
         sortPacks: '0updated'
     },
     showAllPacks: true
@@ -119,6 +119,7 @@ export const setCardPacksTC = (): ThunkType =>
         cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
             .then((res) => {
                     dispatch(setCardPacks(res.data.cardPacks))
+                console.log(res)
                 }
             )
     }
@@ -160,9 +161,10 @@ type PacksActionType =
     | SetPageCountAT
     | SetSortPacksAT
 
-type CardPacks = {
+export type CardPacks = {
     _id: string
     user_id: string
+    user_name: string
     name: string
     path?: string
     cardsCount: number

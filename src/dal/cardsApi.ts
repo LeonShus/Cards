@@ -1,4 +1,5 @@
 import axios from "axios"
+import {CardPacks} from "../components/bll/b1-reducers/r4-packs/packs-reducer";
 
 const instance = axios.create({
     // baseURL: "https://neko-back.herokuapp.com/2.0/",
@@ -36,7 +37,7 @@ export const authApi = {
 
 export const cardPacksApi = {
     getCardPacks(userId: string = '',min:number=0,max:number=9999,sortPacks:string='',page:number=1,pageCount:number = 4) {
-        return instance.get(`/cards/pack?packName=${userId}&user_id=${userId}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}`)
+        return instance.get<GetPacksResponseType>(`/cards/pack?packName=${userId}&user_id=${userId}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}`)
     },
     createCardsPack(name: string, deckCover: string='', privat: boolean) {
         return instance.post("/cards/pack", {cardsPack: {name, deckCover, private: privat}})
@@ -47,6 +48,15 @@ export const cardPacksApi = {
     changeCardsPack(_id: string, name: string) {
         return instance.put(`/cards/pack`, {cardsPack: {_id, name}})
     },
+}
+
+type GetPacksResponseType = {
+    cardPacks: CardPacks[]
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
 }
 
 export const cardsApi = {

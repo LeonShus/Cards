@@ -18,6 +18,8 @@ export const RangeSlider = ({minMax}: RangeSliderPropsType) => {
         <div className={styles.container}>
             <Slider
                 value={value}
+                min={minMax[0]}
+                max={minMax[1]}
                 onChange={handleChange}
                 valueLabelDisplay="on"
                 sx={{color: "#45007A"}}
