@@ -14,6 +14,7 @@ import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import {Header} from "./common/c2-components/c6-Header/Header";
 import {PacksList} from "./components/pages/p5-packs-list/packs-list";
+import { CardsPage } from "./components/pages/p5-cards/CardsPage";
 
 export const App = () => {
 
@@ -27,6 +28,7 @@ export const App = () => {
     if (isFetching) {
         return <Preloader/>
     }
+
 
 
     return (
@@ -45,6 +47,7 @@ export const App = () => {
                         <Route path={"error"} element={<Error404Page/>}/>
                         <Route path={"test"} element={<TestPage/>}/>
                         <Route path={"packs-list"} element={<PacksList/>}/>
+                        <Route path={"cards/:id"} element={<CardsPage/>}/>
                     </Routes>
                 </div>
             </HashRouter>
