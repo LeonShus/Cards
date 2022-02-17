@@ -48,6 +48,7 @@ export const setCards = (cards: Array<Cards>) => {
     } as const
 }
 
+//Thunks
 type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
 export const setCardsTC = (cardsPackID: string): ThunkType =>
     dispatch => {
@@ -69,3 +70,11 @@ export const deleteCardTC = (card_id: string): ThunkType =>
         cardsApi.deleteCard(card_id)
             .then((res) => dispatch(setCardsTC(res.data.deletedCard.cardsPack_id)))
     }
+export const changeCardTC = (card_id: string, question: string, answer: string ): ThunkType =>
+    dispatch => {
+        cardsApi.changeCard(card_id,question,answer )
+            .then((res) => {
+                dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
+            })
+    }
+
