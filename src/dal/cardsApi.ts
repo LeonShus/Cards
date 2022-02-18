@@ -62,8 +62,8 @@ type GetPacksResponseType = {
 }
 
 export const cardsApi = {
-    getCards(cardsPackID: string) {
-        return instance.get(`/cards/card?cardsPack_id=${cardsPackID}`)
+    getCards(cardsPackID: string, pageCount:number, page:number) {
+        return instance.get(`/cards/card?cardsPack_id=${cardsPackID}&pageCount=${pageCount}&page=${page}`)
     },
     createCard(cardsPack_id: string, question: string, answer: string) {
         return instance.post(`/cards/card`, {card: {cardsPack_id, question, answer}})
