@@ -1,6 +1,7 @@
 import Pagination from "@mui/material/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
+import {setCardsPage} from "../../../bll/b1-reducers/r5-cards/cards-reducer";
 
 
 export const CardPagination = () => {
@@ -20,16 +21,12 @@ export const CardPagination = () => {
     }
 
     const onClickPage = (event: React.ChangeEvent<unknown>, value: number) => {
-        dispatch(SetCardsPageAT(value))
+        dispatch(setCardsPage(value))
     }
 
     return (
-        <div className={'pagination'}>
+        <div className={"pagination"}>
             <Pagination count={paginationNumber} page={page} onChange={onClickPage}/>
         </div>
     )
-}
-
-function SetCardsPageAT(page: number): any {
-    throw new Error("Function not implemented.");
 }
