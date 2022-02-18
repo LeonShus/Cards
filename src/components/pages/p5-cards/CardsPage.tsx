@@ -5,10 +5,14 @@ import {AppStateType} from "../../bll/b2-store/store";
 import {Cards, createCardTC, setCardsTC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import {CardsList} from "./CardsList";
 import styles from './CardsPage.module.scss'
-
+import { CardPagination } from "./Pagination/CardsPagination";
+import {Button, Input} from "@mui/material";
+import SelectVariants from "./Select/CardsSelect";
 
 export const CardsPage = () => {
     const dispatch = useDispatch()
+    const pageCount = useSelector<AppStateType, number>((state) => state.cards.pageCount)
+    const page = useSelector<AppStateType, number>((state) => state.cards.page)
     const cards = useSelector<AppStateType, Array<Cards>>((state) => state.cards.cards)
     const isAuthorized = useSelector<AppStateType, boolean>(state => state.login.isLoggedIn)
     const {id} = useParams()
@@ -18,7 +22,7 @@ export const CardsPage = () => {
                 dispatch(setCardsTC(id))
             }
         }
-    }, [isAuthorized])
+    }, [isAuthorized, pageCount,page ])
 
     const addCardBtn = () => {
         if (id) {
@@ -26,13 +30,14 @@ export const CardsPage = () => {
         }
     }
     return (
-        <div>
+        <div className={styles.cardsPage}>
             <h2>Pack name</h2>
             <div className={styles.block}>
-                <input type="text"/>
-                <button onClick={addCardBtn}>Add new card</button>
+                <Button variant="contained" onClick={addCardBtn}>Add new card</Button>
             </div>
             {cards.length !== 0 ? <CardsList cards={cards}/> : <div>Not cards</div>}
+            <CardPagination/>
+            <SelectVariants/>
         </div>
     )
 }
