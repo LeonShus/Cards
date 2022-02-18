@@ -6,18 +6,25 @@ import {Setting} from "./p2-setting-container/setting";
 import {PackSearch} from "./p3-pack-search/pack-search";
 import {PackPaginator} from "./p4-packs-list-paginator/pack-paginator";
 import {AddPack} from "./p6-add-pack/add-pack";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../bll/b2-store/store";
+import { Navigate } from "react-router-dom";
 
 
 export const PacksList = () => {
 
+    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.login.isLoggedIn)
     const [addPack, setAddPack] = useState(false)
 
-    console.log("PackList")
     const openAddPack = () => {
         setAddPack(true)
     }
     const closeAddPack = () => {
         setAddPack(false)
+    }
+
+    if(!isLoggedIn){
+        return <Navigate to={"/login"}/>
     }
 
     return (

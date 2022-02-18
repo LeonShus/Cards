@@ -10,11 +10,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {CardPacks, deletePackTC, setCardPacksTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
+import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 
 
 export const PackTable = () => {
 
     const dispatch = useDispatch()
+    const isPacksFetch = useSelector<AppStateType, boolean>(state => state.packs.isFetching)
     const showAll = useSelector<AppStateType, boolean>(state => state.packs.showAllPacks)
     const minCards = useSelector<AppStateType, number>(state => state.packs.settings.minCardsCount)
     const maxCards = useSelector<AppStateType, number>(state => state.packs.settings.maxCardsCount)
@@ -88,6 +90,7 @@ export const PackTable = () => {
 
     return (
         <div>
+            {isPacksFetch && <Preloader/>}
             <TableContainer>
                 <Table>
                     <TableHead>
