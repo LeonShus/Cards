@@ -1,7 +1,12 @@
 @import "../../../common/c1-styles/sass/variables";
 @import "../../../common/c1-styles/sass/mixins";
 
-.container {
+.newPackContainer{
+  @include contentBox(row, center, 0);
+  justify-content: center;
+}
+
+.packsContainer {
   @include contentBox(row, "", 0);
   min-height: 80vh;
   flex-wrap: wrap;
@@ -29,10 +34,6 @@
     .tableContainer {
       border: 1px solid $primaryColor;
       border-radius: 10px;
-    }
-
-    .paginatorContainer {
-      margin-top: 10px;
     }
   }
 }

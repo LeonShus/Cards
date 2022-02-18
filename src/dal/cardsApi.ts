@@ -39,9 +39,9 @@ export const cardPacksApi = {
     getCardPacks(userId: string, min: number, max: number,
                  sortPacks: string, page: number, pageCount: number,
                  packName?: string,) {
-        return instance.get<GetPacksResponseType>(`/cards/pack?packName=${packName ? packName : userId}&user_id=${userId}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}`)
+        return instance.get<GetPacksResponseType>(`/cards/pack?packName=${packName ? packName : ""}&user_id=${userId}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}`)
     },
-    createCardsPack(name: string, deckCover: string = "", privat: boolean) {
+    createCardsPack(name: string, deckCover: string, privat: boolean, ) {
         return instance.post("/cards/pack", {cardsPack: {name, deckCover, private: privat}})
     },
     deleteCardsPack(id: string) {

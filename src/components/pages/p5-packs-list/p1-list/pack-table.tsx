@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,12 +6,23 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
-import {CardPacks} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
+import {CardPacks, setCardPacksTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 
 
 export const PackTable = () => {
+
+    const dispatch = useDispatch()
+    const currentPage = useSelector<AppStateType, number>(state => state.packs.settings.page)
+
+    useEffect(() => {
+        dispatch(setCardPacksTC())
+    }, [currentPage])
+
+
+    const userId = useSelector<AppStateType>(state => state.login.userData._id)
+
 
     const packs = useSelector<AppStateType, CardPacks[]>(state => state.packs.cardPacks)
 
@@ -26,9 +37,20 @@ export const PackTable = () => {
             <TableCell align="right">{row.cardsCount}</TableCell>
             <TableCell align="right">{row.updated}</TableCell>
             <TableCell align="right">{row.user_name}</TableCell>
-            <TableCell align="right">
-                <CustomButton>del</CustomButton>
-            </TableCell>
+            {userId === row.user_id
+                ?
+                <TableCell align="right" sx={{display: "flex"}}>
+                    <CustomButton>learn</CustomButton>
+                    <CustomButton>delete</CustomButton>
+                    <CustomButton>edit</CustomButton>
+
+                </TableCell>
+                :
+                <TableCell align="right">
+                    <CustomButton>learn</CustomButton>
+                </TableCell>
+            }
+
         </TableRow>
     ))
 

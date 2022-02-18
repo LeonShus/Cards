@@ -140,7 +140,7 @@ export const setCardPacksTC = (): ThunkType =>
     }
 
 type  ThunkType = ThunkAction<void, AppStateType, unknown, PacksActionType>
-export const createPackTC = (name: string, deckCover: string = "", privat: boolean): ThunkType =>
+export const createPackTC = (name: string, deckCover: string, privat: boolean): ThunkType =>
     dispatch => {
         cardPacksApi.createCardsPack(name, deckCover, privat)
             .then(() => {
@@ -164,14 +164,6 @@ export const changePackTC = (packId: string, name: string): ThunkType =>
             })
     }
 
-export const setNewPacksPage = (page: number): ThunkType => async (dispatch) => {
-    try {
-        dispatch(setPage(page))
-        dispatch(setCardPacksTC())
-    } catch (e) {
-
-    }
-}
 
 //Types
 type InitStateType = typeof initState
