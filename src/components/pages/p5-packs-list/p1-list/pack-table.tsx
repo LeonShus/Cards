@@ -9,12 +9,15 @@ import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/Cus
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
 import {CardPacks, setCardPacksTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
+import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 
 
 export const PackTable = () => {
 
     const dispatch = useDispatch()
     const currentPage = useSelector<AppStateType, number>(state => state.packs.settings.page)
+
+
 
     useEffect(() => {
         dispatch(setCardPacksTC())
@@ -56,6 +59,8 @@ export const PackTable = () => {
 
     return (
         <div>
+            <EditModalWindow/>
+
             <TableContainer>
                 <Table>
                     <TableHead>
