@@ -61,7 +61,7 @@ export const setCardsTC = (cardsPackID: string): ThunkType =>
     (dispatch, getState: () => AppStateType) => {
         const pageCount = getState().cards.pageCount
         const page = getState().cards.page
-        cardsApi.getCards(cardsPackID, page, pageCount)
+        cardsApi.getCards(cardsPackID, pageCount, page)
             .then((res) => {
                     debugger
                     dispatch(setCards(res.data.cards, res.data.cardsTotalCount))

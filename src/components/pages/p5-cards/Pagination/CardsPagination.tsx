@@ -8,6 +8,8 @@ export const CardPagination = () => {
     const cardsTotalCount = useSelector<AppStateType, number>((state) => state.cards.cardsTotalCount)
     const pageCount = useSelector<AppStateType, number>((state) => state.cards.pageCount)
     const page = useSelector<AppStateType, number>((state) => state.cards.page)
+    const paginationNumber = Math.ceil(cardsTotalCount / pageCount)
+
     let pageArr = []
     if (pageCount < cardsTotalCount) {
         for (let i = 1; i <= cardsTotalCount / pageCount; i++) {
@@ -23,7 +25,7 @@ export const CardPagination = () => {
 
     return (
         <div className={'pagination'}>
-            <Pagination count={pageArr.length} page={page} onChange={onClickPage}/>
+            <Pagination count={paginationNumber} page={page} onChange={onClickPage}/>
         </div>
     )
 }

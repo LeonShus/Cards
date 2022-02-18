@@ -4,10 +4,10 @@ import {useParams} from "react-router-dom";
 import {AppStateType} from "../../bll/b2-store/store";
 import {Cards, createCardTC, setCardsTC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import {CardsList} from "./CardsList";
-import styles from './CardsPage.module.scss'
-import { CardPagination } from "./Pagination/CardsPagination";
-import {Button, Input} from "@mui/material";
-import SelectVariants from "./Select/CardsSelect";
+import styles from "./CardsPage.module.scss"
+import {CardPagination} from "./Pagination/CardsPagination";
+import {Button} from "@mui/material";
+// import SelectVariants from "./Select/CardsSelect";
 
 export const CardsPage = () => {
     const dispatch = useDispatch()
@@ -22,11 +22,11 @@ export const CardsPage = () => {
                 dispatch(setCardsTC(id))
             }
         }
-    }, [isAuthorized, pageCount,page ])
+    }, [isAuthorized, pageCount, page])
 
     const addCardBtn = () => {
         if (id) {
-            dispatch(createCardTC(id, 'How are you?', ' i\'m fine'))
+            dispatch(createCardTC(id, "How are you?", " i'm fine"))
         }
     }
     return (
@@ -37,7 +37,7 @@ export const CardsPage = () => {
             </div>
             {cards.length !== 0 ? <CardsList cards={cards}/> : <div>Not cards</div>}
             <CardPagination/>
-            <SelectVariants/>
+            {/*<SelectVariants/>*/}
         </div>
     )
 }

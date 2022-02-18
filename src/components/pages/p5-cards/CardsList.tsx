@@ -18,7 +18,7 @@ export const CardsList = (props: PropsType) => {
                 <div className={styles.actions}>Actions</div>
             </div>
             {props.cards.map((c: Cards) => {
-                return (<Card card={c}/>)
+                return (<Card key={c._id} card={c}/>)
             })}
         </div>
     )
