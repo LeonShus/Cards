@@ -11,6 +11,8 @@ import {AppStateType} from "../../../bll/b2-store/store";
 import {CardPacks, deletePackTC, setCardPacksTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
+import {Link} from "react-router-dom";
+import {CustomLink} from "../../../../common/c2-components/c11-CustomLink/custom-link";
 
 
 export const PackTable = () => {
@@ -35,6 +37,7 @@ export const PackTable = () => {
     const deletePack = (packId: string) => {
         dispatch(deletePackTC(packId))
     }
+
 
     useEffect(() => {
         dispatch(setCardPacksTC())
@@ -64,9 +67,10 @@ export const PackTable = () => {
                     />
                     }
 
-                    <CustomButton>
-                        learn
-                    </CustomButton>
+                    <CustomLink
+                        address={`/cards/${el._id}`}
+                        text={"Learn"}
+                    />
                     <CustomButton
                         onClick={() => deletePack(el._id)}
                     >
@@ -81,7 +85,10 @@ export const PackTable = () => {
                 </TableCell>
                 :
                 <TableCell align="right">
-                    <CustomButton>learn</CustomButton>
+                    <CustomLink
+                        address={`/cards/${el._id}`}
+                        text={"Learn"}
+                    />
                 </TableCell>
             }
 

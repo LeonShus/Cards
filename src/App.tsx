@@ -29,8 +29,6 @@ export const App = () => {
         return <Preloader/>
     }
 
-
-
     return (
         <div className={styles.container}>
             <HashRouter>
