@@ -5,7 +5,11 @@ import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/Cus
 import {useDispatch} from "react-redux";
 import {setCardPacksTC, setPackNameForSearch} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 
-export const PackSearch = () => {
+type PackSearch = {
+    openCreteWindow: () => void
+}
+
+export const PackSearch = ({openCreteWindow}:PackSearch) => {
 
     const dispatch = useDispatch()
 
@@ -15,22 +19,27 @@ export const PackSearch = () => {
         setValue(value)
     }
 
-    const btnOnclickHandler = () => {
+    const search = () => {
         dispatch(setPackNameForSearch(value))
         dispatch(setCardPacksTC())
     }
 
-    console.log(value)
+    const openCreate = () => {
+        openCreteWindow()
+    }
 
     return (
         <div className={styles.searchContainer}>
             <CustomInput
                 value={value}
                 onChangeText={changeValue}
-                onEnter={btnOnclickHandler}
+                onEnter={search}
             />
-            <CustomButton onClick={btnOnclickHandler}>
+            <CustomButton onClick={search}>
                 Search
+            </CustomButton>
+            <CustomButton onClick={openCreate}>
+                Create
             </CustomButton>
         </div>
     )

@@ -1,6 +1,7 @@
 import {cardPacksApi} from "../../../../dal/cardsApi";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../../b2-store/store";
+import {setIsFetchingAC} from "../app/app-reducer";
+import {Dispatch} from "redux";
+import {resError} from "../Errors";
 
 
 const initState = {
@@ -122,34 +123,43 @@ export const setPackNameForSearch = (value: string) => {
 }
 
 //Thunks
-export const setCardPacksTC = (): ThunkType =>
-    (dispatch, getState) => {
-        const state = getState()
-        const userId = state.packs.showAllPacks
-            ? ""
-            : state.login.userData._id
-        const settings = state.packs.settings
-        const {minCardsCount, maxCardsCount, page, pageCount, sortPacks, packNameForSearch} = settings
+export const setCardPacksTC = () => async (dispatch: Dispatch, getState: any) => {
+    const state = getState()
+    const userId = state.packs.showAllPacks
+        ? ""
+        : state.login.userData._id
+    const settings = state.packs.settings
+    const {minCardsCount, maxCardsCount, page, pageCount, sortPacks, packNameForSearch} = settings
 
-        cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount, packNameForSearch)
-            .then((res) => {
-                    dispatch(setCardPacks(res.data.cardPacks, res.data.cardPacksTotalCount))
-                    console.log(res)
-                }
-            )
+    dispatch(setIsFetchingAC(true))
+    try {
+        let res = await cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount, packNameForSearch)
+
+        dispatch(setCardPacks(res.data.cardPacks, res.data.cardPacksTotalCount))
+        console.log(res)
+
+    } catch (e: any) {
+        const error = resError(e)
+        console.log("Error: ", {...e})
+    } finally {
+        dispatch(setIsFetchingAC(false))
+    }
+}
+
+export const createPackTC = (name: string, deckCover: string, privat: boolean) => async (dispatch: Dispatch) => {
+
+    try {
+        let res = await cardPacksApi.createCardsPack(name, deckCover, privat)
+        dispatch(setCardPacksTC())
+    } catch (e: any) {
+        const error = resError(e)
+        console.log("Error: ", {...e})
     }
 
-type  ThunkType = ThunkAction<void, AppStateType, unknown, PacksActionType>
-export const createPackTC = (name: string, deckCover: string, privat: boolean): ThunkType =>
-    dispatch => {
-        cardPacksApi.createCardsPack(name, deckCover, privat)
-            .then(() => {
-                dispatch(setCardPacksTC())
-            })
-    }
+}
 
-export const deletePackTC = (packId: string): ThunkType =>
-    dispatch => {
+export const deletePackTC = (packId: string) =>
+    (dispatch: Dispatch) => {
         cardPacksApi.deleteCardsPack(packId)
             .then(() => {
                 dispatch(setCardPacksTC())

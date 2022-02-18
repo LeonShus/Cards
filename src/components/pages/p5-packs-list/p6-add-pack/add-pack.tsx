@@ -5,23 +5,31 @@ import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/Cus
 import {Title} from "../../../../common/c2-components/c5-Title/Title";
 import {useDispatch} from "react-redux";
 import {createPackTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
+import {withModalWindow} from "../../../../common/c3-hoc/h1-modal-window/modal-window";
 
-export const AddPack = () => {
+type AddPackPropsType = {
+    closeModal: () => void
+}
 
-    const [name, setName] = useState("")
-
+export const AddPack = withModalWindow(({closeModal}:AddPackPropsType) => {
+    
     const dispatch = useDispatch()
+    const [name, setName] = useState("")
 
     const changeName = (value: string) => {
         setName(value)
     }
+    const close = () => {
+        closeModal()
+    }
 
     const createPack = () => {
         dispatch(createPackTC(name, "", false))
+        closeModal()
     }
 
     return(
-        <div className={styles.container}>
+        <div className={styles.modalContainer}>
             <Title text={"Create Pack"}/>
 
             <div className={styles.contentContainer}>
@@ -29,11 +37,17 @@ export const AddPack = () => {
                     labelText={'name'}
                     onChangeText={changeName}
                 />
-                <CustomButton onClick={createPack}>
-                    Create
-                </CustomButton>
+                <div className={styles.btnContainer}>
+                    <CustomButton onClick={createPack}>
+                        Create
+                    </CustomButton>
+                    <CustomButton onClick={close}>
+                        Close
+                    </CustomButton>
+                </div>
+
             </div>
         </div>
 
     )
-}
+})
