@@ -5,19 +5,31 @@ import {CustomInput} from "../../../common/c2-components/c1-CustomInput/CustomIn
 import {CustomButton} from "../../../common/c2-components/c2-CustomButton/CustomButton";
 import {PackTable} from "./p1-list/pack-table";
 import {Paginator} from "../../../common/c2-components/c10-paginator/paginator";
-import {useDispatch} from "react-redux";
-import {setCardPacksTC} from "../../bll/b1-reducers/r4-packs/packs-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {setCardPacksTC, setNewPacksPage} from "../../bll/b1-reducers/r4-packs/packs-reducer";
 import {Setting} from "./p2-setting-container/setting";
+import {AppStateType} from "../../bll/b2-store/store";
+
 
 export const PacksList = () => {
 
     const dispatch = useDispatch()
+
+    const currentPage = useSelector<AppStateType, number>(state => state.packs.settings.page)
+    const packTotalCount = useSelector<AppStateType, number>(state => state.packs.cardPacksTotalCount)
+    const pageCount = useSelector<AppStateType, number>(state => state.packs.settings.pageCount)
+
+    console.log(currentPage)
+    console.log(packTotalCount)
 
 
     useEffect(() => {
         dispatch(setCardPacksTC())
     }, [])
 
+    const setPage = (page: number) => {
+        dispatch(setNewPacksPage(page))
+    }
 
     return (
         <div className={styles.container}>
@@ -37,10 +49,15 @@ export const PacksList = () => {
                 <div className={styles.tableContainer}>
                     <PackTable/>
                 </div>
-                <div className={styles.paginatorContainer}>
-                    <Paginator/>
-                </div>
 
+                <div className={styles.paginatorContainer}>
+                    <Paginator
+                        currentPage={currentPage}
+                        totalCount={packTotalCount}
+                        pageCount={pageCount}
+                        setPageCallback={setPage}
+                    />
+                </div>
             </div>
         </div>
     )

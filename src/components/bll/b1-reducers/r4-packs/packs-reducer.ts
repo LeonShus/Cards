@@ -12,7 +12,8 @@ const initState = {
         pageCount: 5,
         sortPacks: "0updated"
     },
-    showAllPacks: true
+    showAllPacks: true,
+    cardPacksTotalCount: 1
 }
 
 export const packsReducer = (state: InitStateType = initState, action: PacksActionType): InitStateType => {
@@ -28,7 +29,9 @@ export const packsReducer = (state: InitStateType = initState, action: PacksActi
             }
         case "PACKS-REDUCER/SET-CARD-PACKS":
             return {
-                ...state, cardPacks: action.cards
+                ...state,
+                cardPacks: action.cards,
+                cardPacksTotalCount: action.cardPacksTotalCount
             }
         case "PACKS-REDUCER/SET-SHOW-ALL-PACKS":
             return {
@@ -85,10 +88,11 @@ export const setSortPacks = (value: string) => {
 }
 
 type setCardPacksAT = ReturnType<typeof setCardPacks>
-export const setCardPacks = (cards: Array<CardPacks>) => {
+export const setCardPacks = (cards: Array<CardPacks>, cardPacksTotalCount: number) => {
     return {
         type: "PACKS-REDUCER/SET-CARD-PACKS",
         cards,
+        cardPacksTotalCount
     } as const
 }
 
@@ -112,7 +116,7 @@ export const setCardPacksTC = (): ThunkType =>
 
         cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
             .then((res) => {
-                    dispatch(setCardPacks(res.data.cardPacks))
+                    dispatch(setCardPacks(res.data.cardPacks, res.data.cardPacksTotalCount))
                     console.log(res)
                 }
             )
@@ -143,6 +147,14 @@ export const changePackTC = (packId: string, name: string): ThunkType =>
             })
     }
 
+export const setNewPacksPage = (page: number): ThunkType => async (dispatch) => {
+    try {
+        dispatch(setPage(page))
+        dispatch(setCardPacksTC())
+    } catch (e) {
+
+    }
+}
 //Types
 type InitStateType = typeof initState
 

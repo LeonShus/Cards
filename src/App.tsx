@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import styles from "./App.module.scss"
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./components/pages/p1- loginization/l1-login/login-page";
 import {RegistrationPage} from "./components/pages/p1- loginization/l2-registration/registration-page";
 import {ProfilePage} from "./components/pages/p2-profile/profile-page";
@@ -39,6 +39,7 @@ export const App = () => {
 
                 <div className={styles.contentContainer}>
                     <Routes>
+                        <Route path={"/"} element={<Navigate to={"/login"}/>}/>
                         <Route path={"login"} element={<LoginPage/>}/>
                         <Route path={"registration"} element={<RegistrationPage/>}/>
                         <Route path={"profile"} element={<ProfilePage/>}/>
