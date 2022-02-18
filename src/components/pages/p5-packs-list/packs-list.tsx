@@ -1,14 +1,13 @@
 import React, {useEffect} from "react"
 import styles from "./packs-list.module.scss"
 import {Title} from "../../../common/c2-components/c5-Title/Title";
-import {CustomInput} from "../../../common/c2-components/c1-CustomInput/CustomInput";
-import {CustomButton} from "../../../common/c2-components/c2-CustomButton/CustomButton";
 import {PackTable} from "./p1-list/pack-table";
 import {Paginator} from "../../../common/c2-components/c10-paginator/paginator";
 import {useDispatch, useSelector} from "react-redux";
 import {setCardPacksTC, setNewPacksPage} from "../../bll/b1-reducers/r4-packs/packs-reducer";
 import {Setting} from "./p2-setting-container/setting";
 import {AppStateType} from "../../bll/b2-store/store";
+import {PackSearch} from "./p3-pack-search/pack-search";
 
 
 export const PacksList = () => {
@@ -40,12 +39,9 @@ export const PacksList = () => {
                 <div>
                     <Title text={"Packs List"}/>
                 </div>
-                <div className={styles.searchContainer}>
-                    <CustomInput/>
-                    <CustomButton>
-                        Search
-                    </CustomButton>
-                </div>
+
+                <PackSearch/>
+
                 <div className={styles.tableContainer}>
                     <PackTable/>
                 </div>

@@ -10,10 +10,11 @@ const initState = {
         minCardsCount: 0,
         page: 1,
         pageCount: 5,
-        sortPacks: "0updated"
+        sortPacks: "0updated",
+        packNameForSearch: ""
     },
     showAllPacks: true,
-    cardPacksTotalCount: 1
+    cardPacksTotalCount: 1,
 }
 
 export const packsReducer = (state: InitStateType = initState, action: PacksActionType): InitStateType => {
@@ -112,9 +113,9 @@ export const setCardPacksTC = (): ThunkType =>
             ? ""
             : state.login.userData._id
         const settings = state.packs.settings
-        const {minCardsCount, maxCardsCount, page, pageCount, sortPacks} = settings
+        const {minCardsCount, maxCardsCount, page, pageCount, sortPacks, packNameForSearch} = settings
 
-        cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount)
+        cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount, packNameForSearch)
             .then((res) => {
                     dispatch(setCardPacks(res.data.cardPacks, res.data.cardPacksTotalCount))
                     console.log(res)
