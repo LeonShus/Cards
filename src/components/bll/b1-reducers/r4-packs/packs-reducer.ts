@@ -6,7 +6,7 @@ import {AppStateType} from "../../b2-store/store";
 const initState = {
     cardPacks: [] as CardPacks[],
     settings: {
-        maxCardsCount: 999,
+        maxCardsCount: 200,
         minCardsCount: 0,
         page: 1,
         pageCount: 5,
@@ -49,6 +49,14 @@ export const packsReducer = (state: InitStateType = initState, action: PacksActi
         case "PACKS-REDUCER/SET-SORT-PACKS":
             return {
                 ...state, settings: {...state.settings, sortPacks: action.value}
+            }
+        case "PACKS-REDUCER/SET-PACK-NAME-FOR-SEARCH":
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    packNameForSearch: action.value
+                }
             }
         default:
             return state
@@ -97,11 +105,19 @@ export const setCardPacks = (cards: Array<CardPacks>, cardPacksTotalCount: numbe
     } as const
 }
 
-type ShowAllCards = ReturnType<typeof setShowAllPacks>
+type ShowAllCardsAT = ReturnType<typeof setShowAllPacks>
 export const setShowAllPacks = (value: boolean) => {
     return {
         type: "PACKS-REDUCER/SET-SHOW-ALL-PACKS",
         value,
+    } as const
+}
+
+type SetPackNameForSearchAT = ReturnType<typeof setPackNameForSearch>
+export const setPackNameForSearch = (value: string) => {
+    return {
+        type: "PACKS-REDUCER/SET-PACK-NAME-FOR-SEARCH",
+        value
     } as const
 }
 
@@ -156,16 +172,18 @@ export const setNewPacksPage = (page: number): ThunkType => async (dispatch) => 
 
     }
 }
+
 //Types
 type InitStateType = typeof initState
 
 type PacksActionType =
     SetMinMaxCardsInPackAT
-    | ShowAllCards
+    | ShowAllCardsAT
     | setCardPacksAT
     | SetPageAT
     | SetPageCountAT
     | SetSortPacksAT
+    | SetPackNameForSearchAT
 
 export type CardPacks = {
     _id: string

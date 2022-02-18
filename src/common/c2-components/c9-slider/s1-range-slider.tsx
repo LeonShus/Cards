@@ -26,7 +26,7 @@ export const RangeSlider = ({minMax, minMaxCallback}: RangeSliderPropsType) => {
             <Slider
                 value={value}
                 min={0}
-                max={999}
+                max={200}
                 onMouseUp={minMaxHandle}
                 onChange={handleChange}
                 valueLabelDisplay="on"
