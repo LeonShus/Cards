@@ -13,6 +13,7 @@ import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import {Link} from "react-router-dom";
 import {CustomLink} from "../../../../common/c2-components/c11-CustomLink/custom-link";
+import {cardsApi} from "../../../../dal/cardsApi";
 
 
 export const PackTable = () => {
@@ -50,7 +51,9 @@ export const PackTable = () => {
             sx={{"&:last-child td, &:last-child th": {border: 0}}}
         >
             <TableCell component="th" scope="row">
-                {el.name}
+                <Link to={`/cards/${el._id}`}>
+                    {el.name}
+                </Link>
             </TableCell>
             <TableCell align="right">{el.cardsCount}</TableCell>
             <TableCell align="right">{el.updated}</TableCell>
@@ -67,10 +70,11 @@ export const PackTable = () => {
                     />
                     }
 
-                    <CustomLink
-                        address={`/cards/${el._id}`}
-                        text={"Learn"}
-                    />
+                    <CustomButton
+                        onClick={() => {}}
+                    >
+                        learn
+                    </CustomButton>
                     <CustomButton
                         onClick={() => deletePack(el._id)}
                     >
@@ -85,10 +89,11 @@ export const PackTable = () => {
                 </TableCell>
                 :
                 <TableCell align="right">
-                    <CustomLink
-                        address={`/cards/${el._id}`}
-                        text={"Learn"}
-                    />
+                    <CustomButton
+                        onClick={() => {}}
+                    >
+                        learn
+                    </CustomButton>
                 </TableCell>
             }
 

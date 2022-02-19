@@ -74,7 +74,9 @@ export const cardsApi = {
     changeCard(_id: string, question: string, answer: string) {
         return instance.put(`/cards/card`, {card: {_id, question, answer}})
     },
+
 }
+
 
 type RegisterRequestType = {
     error?: string
