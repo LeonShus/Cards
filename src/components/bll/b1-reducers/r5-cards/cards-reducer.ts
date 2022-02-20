@@ -10,14 +10,15 @@ const initState = {
     minGrade: 0,
     page: 1,
     pageCount: 4,
-    packUserId: ''
+    packUserId: '',
+    isFetching: false
 }
 
 export const cardsReducer = (state: InitStateType = initState, action: CardsActionType): InitStateType => {
     switch (action.type) {
         case "CARD-REDUCER/SET-CARDS":
             return {
-                ...state, cards: action.cards, cardsTotalCount: action.cardsTotalCount
+                ...state, cards: action.cards, cardsTotalCount: action.cardsTotalCount, packUserId:action.packUserId
             }
         case "CARD-REDUCER/SET-PAGE":
             return {
@@ -27,16 +28,20 @@ export const cardsReducer = (state: InitStateType = initState, action: CardsActi
             return {
                 ...state, pageCount: action.pageCount
             }
+        case "CARD-REDUCER/SET-CARDS-IS-FETCHING":
+            return {
+                ...state, isFetching: action.isFetch
+            }
         default:
             return state
     }
 }
 
 type SetCardsAT = ReturnType<typeof setCards>
-export const setCards = (cards: Array<Cards>, cardsTotalCount: number) => {
+export const setCards = (cards: Array<Cards>, cardsTotalCount: number, packUserId:string) => {
     return {
         type: "CARD-REDUCER/SET-CARDS",
-        cards, cardsTotalCount
+        cards, cardsTotalCount, packUserId
     } as const
 }
 
@@ -55,16 +60,24 @@ export const setCardsPageCount = (pageCount: number) => {
         pageCount,
     } as const
 }
+type SetCardsIsFetchingAT = ReturnType<typeof setCardsIsFetching>
+export const setCardsIsFetching = (isFetch: boolean) => {
+    return {
+        type: "CARD-REDUCER/SET-CARDS-IS-FETCHING",
+        isFetch
+    } as const
+}
 
 //Thunks
 export const setCardsTC = (cardsPackID: string): ThunkType =>
     (dispatch, getState: () => AppStateType) => {
+        dispatch(setCardsIsFetching(true))
         const pageCount = getState().cards.pageCount
         const page = getState().cards.page
         cardsApi.getCards(cardsPackID, pageCount, page)
             .then((res) => {
-                    debugger
-                    dispatch(setCards(res.data.cards, res.data.cardsTotalCount))
+                    dispatch(setCards(res.data.cards, res.data.cardsTotalCount, res.data.packUserId))
+                    dispatch(setCardsIsFetching(false))
                 }
             )
     }
@@ -98,11 +111,14 @@ type InitStateType = {
     page: number,
     pageCount: number,
     packUserId: string
+    isFetching: boolean
 }
 type CardsActionType =
     SetCardsAT
     | SetCardsPageAT
     | SetCardsPageCountAT
+    | SetCardsIsFetchingAT
+
 
 type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
 export type Cards = {
