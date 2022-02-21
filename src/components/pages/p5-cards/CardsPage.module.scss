@@ -13,9 +13,21 @@
   .block {
     display: flex;
     justify-content: center;
+
     .searchBlock {
       display: flex;
     }
 
+  }
+
+  .pagSelectBlock {
+    display: flex;
+    .selectWrapper{
+      margin-left: 10px;
+      display: flex;
+      span{
+        margin-right: 10px;
+      }
+    }
   }
 }

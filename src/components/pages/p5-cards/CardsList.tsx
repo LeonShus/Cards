@@ -17,7 +17,6 @@ type PropsType = {
 }
 
 export const CardsList = (props: PropsType) => {
-    const isCardsFetch = useSelector<AppStateType, boolean>((state)=>state.cards.isFetching)
     const userId = useSelector<AppStateType, string>((state) => state.login.userData._id)
 
     const dispatch = useDispatch()
@@ -55,7 +54,6 @@ export const CardsList = (props: PropsType) => {
     ))
     return (
         <div className={styles.container}>
-            {isCardsFetch && <Preloader/>}
             <TableContainer>
                 <Table>
                     <TableHead>
