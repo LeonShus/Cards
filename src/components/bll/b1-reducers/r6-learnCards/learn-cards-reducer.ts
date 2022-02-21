@@ -1,4 +1,6 @@
 import {Cards} from "../r5-cards/cards-reducer";
+import {Dispatch} from "redux";
+import {cardsApi} from "../../../../dal/cardsApi";
 
 
 const initState = {
@@ -28,4 +30,25 @@ const setCardsToLearnAC = (cards: Cards[]) => {
     } as const
 }
 
+//THUNK
 
+export const setCardsToLearnT = (cardsPackId: string) => async (dispatch: Dispatch) => {
+    try{
+        const res = await cardsApi.getCards(cardsPackId, 100, 1)
+
+        dispatch(setCardsToLearnAC(res.data.cards))
+
+    } catch (e) {
+
+    }
+}
+
+export const sendCardGradeT = (grade: number, cardId: string) => async (dispatch: Dispatch) => {
+    try {
+        const res = await cardsApi.updateGrade(grade, cardId)
+
+        console.log(res)
+    } catch (e){
+
+    }
+}

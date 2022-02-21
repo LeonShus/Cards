@@ -6,6 +6,7 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 
 type SuperCheckboxPropsType = DefaultInputPropsType & {
     onChangeChecked?: (checked: boolean) => void
+    nameCheck?: string
 }
 
 export const CustomCheckbox: React.FC<SuperCheckboxPropsType> = (
@@ -14,7 +15,7 @@ export const CustomCheckbox: React.FC<SuperCheckboxPropsType> = (
         onChange, onChangeChecked,
         className,
         children,
-
+        nameCheck,
         ...restProps
     }
 ) => {
@@ -32,6 +33,7 @@ export const CustomCheckbox: React.FC<SuperCheckboxPropsType> = (
             <label>
                 <input
                     type={"checkbox"}
+                    name={nameCheck ? nameCheck : ""}
                     onChange={onChangeCallback}
                     className={styles.checkbox}
 
