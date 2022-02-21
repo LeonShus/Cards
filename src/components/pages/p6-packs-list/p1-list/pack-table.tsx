@@ -12,6 +12,7 @@ import {CardPacks, deletePackTC, setCardPacksTC} from "../../../bll/b1-reducers/
 import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import {Link} from "react-router-dom";
+import {cardsApi} from "../../../../dal/cardsApi";
 
 
 export const PackTable = () => {
@@ -89,8 +90,7 @@ export const PackTable = () => {
                 :
                 <TableCell align="right">
                     <CustomButton
-                        onClick={() => {
-                        }}
+                        onClick={() => cardsApi.updateGrade(3,"62138496c002ef1d54bb268a")}
                     >
                         learn
                     </CustomButton>

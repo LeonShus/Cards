@@ -74,7 +74,9 @@ export const cardsApi = {
     changeCard(_id: string, question: string, answer: string) {
         return instance.put(`/cards/card`, {card: {_id, question, answer}})
     },
-
+    updateGrade(grade: number, cardId: string){
+        return instance.put("cards/grade", {grade: grade, card_id: cardId})
+    }
 }
 
 

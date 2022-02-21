@@ -14,6 +14,7 @@ export const Navigation = () => {
                 <Link to={"test"}>Test</Link>
                 <Link to={"profile"}>Profile</Link>
                 <Link to={"packs-list"}>Pack List</Link>
+                <Link to={"learn"}>Learn</Link>
             </nav>
         </div>
 

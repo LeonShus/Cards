@@ -15,6 +15,7 @@ import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import {Header} from "./common/c2-components/c6-Header/Header";
 import {PacksList} from "./components/pages/p6-packs-list/packs-list";
 import { CardsPage } from "./components/pages/p5-cards/CardsPage";
+import {LearnCard} from "./components/pages/p7-learn-page/learn-card";
 
 export const App = () => {
 
@@ -47,6 +48,7 @@ export const App = () => {
                         <Route path={"test"} element={<TestPage/>}/>
                         <Route path={"packs-list"} element={<PacksList/>}/>
                         <Route path={"cards/:id"} element={<CardsPage/>}/>
+                        <Route path={"learn"} element={<LearnCard/>}/>
                     </Routes>
                 </div>
             </HashRouter>
