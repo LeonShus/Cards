@@ -13,6 +13,7 @@ import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import {Link} from "react-router-dom";
 import {cardsApi} from "../../../../dal/cardsApi";
+import {CustomLink} from "../../../../common/c2-components/c11-CustomLink/custom-link";
 
 
 export const PackTable = () => {
@@ -89,11 +90,7 @@ export const PackTable = () => {
                 </TableCell>
                 :
                 <TableCell align="right">
-                    <CustomButton
-                        onClick={() => cardsApi.updateGrade(3,"62138496c002ef1d54bb268a")}
-                    >
-                        learn
-                    </CustomButton>
+                    <CustomLink text={"learn"} address={`/learn/${el._id}`}/>
                 </TableCell>
             }
 

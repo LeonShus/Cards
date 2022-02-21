@@ -48,7 +48,7 @@ export const App = () => {
                         <Route path={"test"} element={<TestPage/>}/>
                         <Route path={"packs-list"} element={<PacksList/>}/>
                         <Route path={"cards/:id"} element={<CardsPage/>}/>
-                        <Route path={"learn"} element={<LearnCard/>}/>
+                        <Route path={"learn/:cardId"} element={<LearnCard/>}/>
                     </Routes>
                 </div>
             </HashRouter>

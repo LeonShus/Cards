@@ -1,5 +1,5 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from "react"
-import styles from "./SuperCheckbox.module.scss"
+import styles from "./CustomCheckbox.module.scss"
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -8,7 +8,7 @@ type SuperCheckboxPropsType = DefaultInputPropsType & {
     onChangeChecked?: (checked: boolean) => void
 }
 
-const SuperCheckbox: React.FC<SuperCheckboxPropsType> = (
+export const CustomCheckbox: React.FC<SuperCheckboxPropsType> = (
     {
         type,
         onChange, onChangeChecked,
@@ -43,5 +43,3 @@ const SuperCheckbox: React.FC<SuperCheckboxPropsType> = (
 
     )
 }
-
-export default SuperCheckbox
