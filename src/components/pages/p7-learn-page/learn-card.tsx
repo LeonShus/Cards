@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Title} from "../../../common/c2-components/c5-Title/Title";
 import styles from "./learn-page.module.scss"
 import {CustomButton} from "../../../common/c2-components/c2-CustomButton/CustomButton";
@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {sendCardGradeT, setCardsToLearnT} from "../../bll/b1-reducers/r6-learnCards/learn-cards-reducer";
 import {AppStateType} from "../../bll/b2-store/store";
 import {Cards} from "../../bll/b1-reducers/r5-cards/cards-reducer";
+import {Preloader} from "../../../common/c2-components/c4-Preloader/Preloader";
 
 const rateYourself = ["Did not Know", "Forgot", "A lot of Thought", "Confused", "Knew the answer"]
 
@@ -28,10 +29,11 @@ const getCard = (cards: Cards[]) => {
 export const LearnCard = () => {
 
     const dispatch = useDispatch()
+    const isFetching = useSelector<AppStateType, boolean>(state => state.learnCards.isFetchingLearnPage)
     const [showAnswer, setShowAnswer] = useState(false)
     const [first, setFirst] = useState<boolean>(true);
     const cards = useSelector<AppStateType, Cards[]>(state => state.learnCards.cards)
-    const [checkedRate, setCheckedRate] = useState("")
+    const [checkedRate, setCheckedRate] = useState("Did not Know")
     const {cardPackId} = useParams()
 
 
@@ -92,6 +94,11 @@ export const LearnCard = () => {
             {el}
         </CustomCheckbox>)
 
+
+    if (isFetching) {
+        return <Preloader/>
+    }
+    console.log(isFetching)
     return (
 
         <div className={styles.container}>
@@ -133,7 +140,10 @@ export const LearnCard = () => {
                         Show Answer
                     </CustomButton>
                     :
-                    <CustomButton onClick={nextQuestion}>
+                    <CustomButton
+                        onClick={nextQuestion}
+                        disabled={isFetching}
+                    >
                         Next
                     </CustomButton>
             }

@@ -5,17 +5,23 @@ import {cardsApi} from "../../../../dal/cardsApi";
 
 const initState = {
     cards: [] as Cards[],
+    isFetchingLearnPage: false
 }
 
 type LearnCardsReducerInitType = typeof initState
-type LearnCardsActionType = SetCardsToLearnAT
+type LearnCardsActionType = SetCardsToLearnAT | SetIsFetchingLearnPageAT
 
 export const learnCardsReducer = (state: LearnCardsReducerInitType = initState, action: LearnCardsActionType) => {
-    switch (action.type){
+    switch (action.type) {
         case "LEARN-CARDS-REDUCER/SET-CARDS-TO-LEARN":
             return {
                 ...state,
                 cards: action.cards
+            }
+        case "LEARN-CARDS-REDUCER/SET-IS-FETCHING-LEARN-PAGE":
+            return {
+                ...state,
+                isFetchingLearnPage: action.fetching
             }
         default:
             return state
@@ -24,31 +30,45 @@ export const learnCardsReducer = (state: LearnCardsReducerInitType = initState, 
 
 type SetCardsToLearnAT = ReturnType<typeof setCardsToLearnAC>
 const setCardsToLearnAC = (cards: Cards[]) => {
-    return{
+    return {
         type: "LEARN-CARDS-REDUCER/SET-CARDS-TO-LEARN",
         cards
+    } as const
+}
+
+type SetIsFetchingLearnPageAT = ReturnType<typeof setIsFetchingLearnPageAC>
+const setIsFetchingLearnPageAC = (fetching: boolean) => {
+    return {
+        type: "LEARN-CARDS-REDUCER/SET-IS-FETCHING-LEARN-PAGE",
+        fetching,
     } as const
 }
 
 //THUNK
 
 export const setCardsToLearnT = (cardsPackId: string) => async (dispatch: Dispatch) => {
-    try{
+    try {
+        dispatch(setIsFetchingLearnPageAC(true))
         const res = await cardsApi.getCards(cardsPackId, 100, 1)
 
         dispatch(setCardsToLearnAC(res.data.cards))
 
     } catch (e) {
 
+    } finally {
+        dispatch(setIsFetchingLearnPageAC(false))
     }
 }
 
 export const sendCardGradeT = (grade: number, cardId: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setIsFetchingLearnPageAC(true))
         const res = await cardsApi.updateGrade(grade, cardId)
 
         console.log(res)
-    } catch (e){
+    } catch (e) {
 
+    } finally {
+        dispatch(setIsFetchingLearnPageAC(false))
     }
 }
