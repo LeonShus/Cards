@@ -30,9 +30,10 @@ export const LearnCard = () => {
 
     const dispatch = useDispatch()
     const isFetching = useSelector<AppStateType, boolean>(state => state.learnCards.isFetchingLearnPage)
+    const cards = useSelector<AppStateType, Cards[]>(state => state.learnCards.cards)
+
     const [showAnswer, setShowAnswer] = useState(false)
     const [first, setFirst] = useState<boolean>(true);
-    const cards = useSelector<AppStateType, Cards[]>(state => state.learnCards.cards)
     const [checkedRate, setCheckedRate] = useState("Did not Know")
     const {cardPackId} = useParams()
 

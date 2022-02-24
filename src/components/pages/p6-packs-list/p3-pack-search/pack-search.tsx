@@ -3,13 +3,13 @@ import styles from "./pack-search.module.scss";
 import {CustomInput} from "../../../../common/c2-components/c1-CustomInput/CustomInput";
 import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {useDispatch} from "react-redux";
-import {setCardPacksTC, setPackNameForSearch} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
+import {setPackNameForSearch} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 
 type PackSearch = {
     openCreteWindow: () => void
 }
 
-export const PackSearch = ({openCreteWindow}:PackSearch) => {
+export const PackSearch = ({openCreteWindow}: PackSearch) => {
 
     const dispatch = useDispatch()
 

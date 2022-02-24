@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react"
+import styles from "./pack-table.module.scss"
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -71,7 +72,10 @@ export const PackTable = () => {
 
             {userId === el.user_id
                 ?
-                <TableCell align="right" sx={{display: "flex"}}>
+                <TableCell align="right"
+                           sx={{
+                               display: "flex",
+                           }}>
                     {/*Edit Window*/}
                     {editMode &&
                     <EditModalWindow
@@ -79,13 +83,10 @@ export const PackTable = () => {
                         closeWindow={EditModeOff}
                     />
                     }
+                    <div className={styles.linkBtn}>
+                        <CustomLink text={"learn"} address={`/learn/${el._id}`}/>
+                    </div>
 
-                    <CustomButton
-                        onClick={() => {
-                        }}
-                    >
-                        learn
-                    </CustomButton>
                     <CustomButton
                         onClick={() => deletePack(el._id)}
                     >
@@ -116,6 +117,7 @@ export const PackTable = () => {
                         <TableRow>
                             <TableCell>
                                 <span
+                                    className={styles.spanStyle}
                                     onClick={() => {
                                         sortPacks(`${+nameSort}name`)
                                         setNameSort(!nameSort)
@@ -126,6 +128,7 @@ export const PackTable = () => {
                             </TableCell>
                             <TableCell>
                                 <span
+                                    className={styles.spanStyle}
                                     onClick={() => {
                                         sortPacks(`${+cardsSort}cardsCount`)
                                         setCardsSort(!cardsSort)
@@ -136,6 +139,7 @@ export const PackTable = () => {
                             </TableCell>
                             <TableCell>
                                 <span
+                                    className={styles.spanStyle}
                                     onClick={() => {
                                         sortPacks(`${+updateSort}updated`)
                                         setUpdateSort(!updateSort)
@@ -146,6 +150,7 @@ export const PackTable = () => {
                             </TableCell>
                             <TableCell>
                                 <span
+                                    className={styles.spanStyle}
                                     onClick={() => {
                                         sortPacks(`${+userNameSort}user_name`)
                                         setUserNameSort(!userNameSort)

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import styles from "./packs-list.module.scss"
 import {Title} from "../../../common/c2-components/c5-Title/Title";
-import {PackTable} from "./p1-list/pack-table";
+import {PackTable} from "./p1-pack-table/pack-table";
 import {Setting} from "./p2-setting-container/setting";
 import {PackSearch} from "./p3-pack-search/pack-search";
 import {PackPaginator} from "./p4-packs-list-paginator/pack-paginator";
