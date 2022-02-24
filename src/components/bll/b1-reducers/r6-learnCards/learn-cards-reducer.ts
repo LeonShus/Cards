@@ -9,7 +9,7 @@ const initState = {
 }
 
 type LearnCardsReducerInitType = typeof initState
-type LearnCardsActionType = SetCardsToLearnAT | SetIsFetchingLearnPageAT
+type LearnCardsActionType = SetCardsToLearnAT | SetIsFetchingLearnPageAT | SetCardGradeAT
 
 export const learnCardsReducer = (state: LearnCardsReducerInitType = initState, action: LearnCardsActionType) => {
     switch (action.type) {
@@ -22,6 +22,11 @@ export const learnCardsReducer = (state: LearnCardsReducerInitType = initState, 
             return {
                 ...state,
                 isFetchingLearnPage: action.fetching
+            }
+        case "LEARN-CARDS-REDUCER/SET-CARD-GRADE":
+            return {
+                ...state,
+                cards: state.cards.map(el => el._id === action.cardId ? {...el, grade: action.grade} : el)
             }
         default:
             return state
@@ -41,6 +46,15 @@ const setIsFetchingLearnPageAC = (fetching: boolean) => {
     return {
         type: "LEARN-CARDS-REDUCER/SET-IS-FETCHING-LEARN-PAGE",
         fetching,
+    } as const
+}
+
+type SetCardGradeAT = ReturnType<typeof setCardGradeAC>
+const setCardGradeAC = (cardId: string, grade: number) => {
+    return {
+        type: "LEARN-CARDS-REDUCER/SET-CARD-GRADE",
+        cardId,
+        grade
     } as const
 }
 
@@ -65,6 +79,7 @@ export const sendCardGradeT = (grade: number, cardId: string) => async (dispatch
         dispatch(setIsFetchingLearnPageAC(true))
         const res = await cardsApi.updateGrade(grade, cardId)
 
+        dispatch(setCardGradeAC(cardId, grade))
         console.log(res)
     } catch (e) {
 
