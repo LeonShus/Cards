@@ -21,7 +21,6 @@ export const PackSearch = ({openCreteWindow}:PackSearch) => {
 
     const search = () => {
         dispatch(setPackNameForSearch(value))
-        dispatch(setCardPacksTC())
     }
 
     const openCreate = () => {

@@ -8,11 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import {CustomButton} from "../../../../common/c2-components/c2-CustomButton/CustomButton";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
-import {CardPacks, deletePackTC, setCardPacksTC} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
+import {CardPacks, deletePackTC, setCardPacksTC, setSortPacks} from "../../../bll/b1-reducers/r4-packs/packs-reducer";
 import {EditModalWindow} from "../p7-edit-modal-window/edit-modal-window";
 import {Preloader} from "../../../../common/c2-components/c4-Preloader/Preloader";
 import {Link} from "react-router-dom";
-import {cardsApi} from "../../../../dal/cardsApi";
 import {CustomLink} from "../../../../common/c2-components/c11-CustomLink/custom-link";
 
 
@@ -26,8 +25,16 @@ export const PackTable = () => {
     const currentPage = useSelector<AppStateType, number>(state => state.packs.settings.page)
     const userId = useSelector<AppStateType>(state => state.login.userData._id)
     const packs = useSelector<AppStateType, CardPacks[]>(state => state.packs.cardPacks)
+    const packForSearch = useSelector<AppStateType, string>(state => state.packs.settings.packNameForSearch)
+    const sortPacksSetting = useSelector<AppStateType, string>(state => state.packs.settings.sortPacks)
 
     const [editMode, setEditMode] = useState(false)
+    //SortTable
+    const [nameSort, setNameSort] = useState(false)
+    const [cardsSort, setCardsSort] = useState(false)
+    const [updateSort, setUpdateSort] = useState(false)
+    const [userNameSort, setUserNameSort] = useState(false)
+
 
     const EditModeOn = () => {
         setEditMode(true)
@@ -38,11 +45,14 @@ export const PackTable = () => {
     const deletePack = (packId: string) => {
         dispatch(deletePackTC(packId))
     }
+    const sortPacks = (sortType: string) => {
+        dispatch(setSortPacks(sortType))
+    }
 
 
     useEffect(() => {
         dispatch(setCardPacksTC())
-    }, [currentPage, showAll, minCards, maxCards])
+    }, [currentPage, showAll, minCards, maxCards, sortPacksSetting, packForSearch])
 
 
     const tableBody = packs.map(el => (
@@ -104,11 +114,49 @@ export const PackTable = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Cards</TableCell>
-                            <TableCell>Last Update</TableCell>
-                            <TableCell>Created By</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell>
+                                <span
+                                    onClick={() => {
+                                        sortPacks(`${+nameSort}name`)
+                                        setNameSort(!nameSort)
+                                    }}
+                                >
+                                    Name
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <span
+                                    onClick={() => {
+                                        sortPacks(`${+cardsSort}cardsCount`)
+                                        setCardsSort(!cardsSort)
+                                    }}
+                                >
+                                    Cards
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <span
+                                    onClick={() => {
+                                        sortPacks(`${+updateSort}updated`)
+                                        setUpdateSort(!updateSort)
+                                    }}
+                                >
+                                    Last Update
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <span
+                                    onClick={() => {
+                                        sortPacks(`${+userNameSort}user_name`)
+                                        setUserNameSort(!userNameSort)
+                                    }}
+                                >
+                                    Created By
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                Actions
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
