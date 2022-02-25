@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {cardsApi} from "../../../../dal/cardsApi";
 import {AppStateType} from "../../b2-store/store";
 import {ThunkAction} from "redux-thunk";
@@ -10,9 +9,9 @@ const initState = {
     minGrade: 0,
     page: 1,
     pageCount: 4,
-    packUserId: '',
+    packUserId: "",
     isFetching: false,
-    sortCards: ''
+    sortCards: ""
 }
 
 export const cardsReducer = (state: InitStateType = initState, action: CardsActionType): InitStateType => {

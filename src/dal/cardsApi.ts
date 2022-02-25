@@ -1,6 +1,5 @@
 import axios from "axios"
 import {CardPacks} from "../components/bll/b1-reducers/r4-packs/packs-reducer";
-import {useParams} from "react-router-dom";
 
 const instance = axios.create({
     // baseURL: "https://neko-back.herokuapp.com/2.0/",
@@ -42,7 +41,7 @@ export const cardPacksApi = {
                  packName?: string,) {
         return instance.get<GetPacksResponseType>(`/cards/pack?packName=${packName ? packName : ""}&user_id=${userId}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}`)
     },
-    createCardsPack(name: string, deckCover: string, privat: boolean, ) {
+    createCardsPack(name: string, deckCover: string, privat: boolean,) {
         return instance.post("/cards/pack", {cardsPack: {name, deckCover, private: privat}})
     },
     deleteCardsPack(id: string) {
@@ -63,8 +62,7 @@ type GetPacksResponseType = {
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string, pageCount:number, page:number, sortCards:string) {
-        //return instance.get(`/cards/card?cardsPack_id=${cardsPackID}&pageCount=${pageCount}&page=${page}&sortCards=${sortCards}`)
+    getCards(cardsPack_id: string, pageCount: number, page: number, sortCards?: string) {
         return instance.get(`/cards/card`, {params: {cardsPack_id, pageCount, page, sortCards}})
     },
     createCard(cardsPack_id: string, question: string, answer: string) {
@@ -76,7 +74,7 @@ export const cardsApi = {
     changeCard(_id: string, question: string, answer: string) {
         return instance.put(`/cards/card`, {card: {_id, question, answer}})
     },
-    updateGrade(grade: number, cardId: string){
+    updateGrade(grade: number, cardId: string) {
         return instance.put("cards/grade", {grade: grade, card_id: cardId})
     }
 }

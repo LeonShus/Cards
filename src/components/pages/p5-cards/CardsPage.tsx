@@ -1,14 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {AppStateType} from "../../bll/b2-store/store";
-import {
-    Cards,
-    createCardTC,
-    setCards,
-    setCardsPageCount,
-    setCardsTC
-} from "../../bll/b1-reducers/r5-cards/cards-reducer";
+import {Cards, createCardTC, setCardsTC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import {CardsList} from "./CardsList";
 import styles from "./CardsPage.module.scss"
 import {CardPagination} from "./Pagination/CardsPagination";
@@ -16,6 +10,7 @@ import {CustomInput} from "../../../common/c2-components/c1-CustomInput/CustomIn
 import {CustomButton} from "../../../common/c2-components/c2-CustomButton/CustomButton";
 import {Preloader} from "../../../common/c2-components/c4-Preloader/Preloader";
 import {CardSelect} from "./Select/CardsSelect";
+import {AddCardModal} from "./p1-card-add-modal/add-card-modal";
 
 export const CardsPage = () => {
     const dispatch = useDispatch()
@@ -29,38 +24,44 @@ export const CardsPage = () => {
     const packUserId = useSelector<AppStateType, string>((state) => state.cards.packUserId)
     const sortCards = useSelector<AppStateType, string>((state) => state.cards.sortCards)
     const {id} = useParams()
+    const [wantToAdd, setWantToAdd] = useState(false)
+
+    const openModal = () => {
+        setWantToAdd(true)
+    }
+    const closeModal = () => {
+        setWantToAdd(false)
+    }
+
+
     useEffect(() => {
         if (id) {
             dispatch(setCardsTC(id))
         }
     }, [pageCount, page, sortCards])
 
-    const addCardBtn = () => {
-        if (id) {
-            dispatch(createCardTC(id, "How are you?", " i'm fine"))
-        }
-    }
+
 
     if (!isLoggedIn) {
         return <Navigate to={"/login"}/>
     }
     return (
         <div className={styles.cardsPage}>
-            <h2>Pack name</h2>
+            <h2>Pack</h2>
             <div className={styles.block}>
-                <div className={styles.searchBlock}>
-                    <CustomInput/>
-                    <CustomButton>
-                        Search
+
+                {wantToAdd && <AddCardModal closeModal={closeModal}/>}
+
+                {userId === packUserId &&
+                    <CustomButton onClick={openModal}>
+                        Create Card
                     </CustomButton>
-                </div>
-                {userId === packUserId ?
-                    <CustomButton onClick={addCardBtn}>Add new card</CustomButton> : null}
+                }
             </div>
             {isCardsFetch ? <Preloader/> : cards.length !== 0 ? <CardsList cards={cards}/> : <div>Not cards</div>}
             <div className={styles.pagSelectBlock}>
                 <CardPagination/>
-                <div className={styles.selectWrapper}> <span>Show</span> <CardSelect/> Cards per Page</div>
+                <div className={styles.selectWrapper}><span>Show</span> <CardSelect/> Cards per Page</div>
             </div>
         </div>
     )

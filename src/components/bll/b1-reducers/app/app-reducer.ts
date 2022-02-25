@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {authApi} from "../../../../dal/cardsApi";
-import {setIsLoggedInAC, setLoginErrorAC, setUserDataAC} from "../r1-login/login-reduser";
+import {setIsLoggedInAC, setUserDataAC} from "../r1-login/login-reduser";
 import {resError} from "../Errors";
 
 

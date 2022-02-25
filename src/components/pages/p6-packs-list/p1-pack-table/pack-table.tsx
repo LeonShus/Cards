@@ -29,7 +29,8 @@ export const PackTable = () => {
     const packForSearch = useSelector<AppStateType, string>(state => state.packs.settings.packNameForSearch)
     const sortPacksSetting = useSelector<AppStateType, string>(state => state.packs.settings.sortPacks)
 
-    const [editMode, setEditMode] = useState(false)
+    const [editCardId, setEditCardId] = useState("")
+
     //SortTable
     const [nameSort, setNameSort] = useState(false)
     const [cardsSort, setCardsSort] = useState(false)
@@ -37,11 +38,8 @@ export const PackTable = () => {
     const [userNameSort, setUserNameSort] = useState(false)
 
 
-    const EditModeOn = () => {
-        setEditMode(true)
-    }
     const EditModeOff = () => {
-        setEditMode(false)
+        setEditCardId("")
     }
     const deletePack = (packId: string) => {
         dispatch(deletePackTC(packId))
@@ -53,60 +51,67 @@ export const PackTable = () => {
 
     useEffect(() => {
         dispatch(setCardPacksTC())
-    }, [currentPage, showAll, minCards, maxCards, sortPacksSetting, packForSearch])
+    }, [dispatch, currentPage, showAll, minCards, maxCards, sortPacksSetting, packForSearch])
 
 
-    const tableBody = packs.map(el => (
-        <TableRow
-            key={el._id}
-            sx={{"&:last-child td, &:last-child th": {border: 0}}}
-        >
-            <TableCell component="th" scope="row">
-                <Link to={`/cards/${el._id}`}>
-                    {el.name}
-                </Link>
-            </TableCell>
-            <TableCell align="right">{el.cardsCount}</TableCell>
-            <TableCell align="right">{el.updated}</TableCell>
-            <TableCell align="right">{el.user_name}</TableCell>
+    const tableBody = packs.map(el => {
 
-            {userId === el.user_id
-                ?
-                <TableCell align="right"
-                           sx={{
-                               display: "flex",
-                           }}>
-                    {/*Edit Window*/}
-                    {editMode &&
-                    <EditModalWindow
-                        packId={el._id}
-                        closeWindow={EditModeOff}
-                    />
-                    }
-                    <div className={styles.linkBtn}>
+        const changeEditId = () => {
+            setEditCardId(el._id)
+        }
+
+        return (
+            <TableRow
+                key={el._id}
+                sx={{"&:last-child td, &:last-child th": {border: 0}}}
+            >
+                <TableCell component="th" scope="row">
+                    <Link to={`/cards/${el._id}`}>
+                        {el.name}
+                    </Link>
+                </TableCell>
+                <TableCell align="right">{el.cardsCount}</TableCell>
+                <TableCell align="right">{el.updated}</TableCell>
+                <TableCell align="right">{el.user_name}</TableCell>
+
+                {userId === el.user_id
+                    ?
+                    <TableCell align="right"
+                               sx={{
+                                   display: "flex",
+                               }}>
+                        {/*Edit Window*/}
+                        {editCardId === el._id &&
+                        <EditModalWindow
+                            packId={el._id}
+                            closeWindow={EditModeOff}
+                        />
+                        }
+                        <div className={styles.linkBtn}>
+                            <CustomLink text={"learn"} address={`/learn/${el._id}`}/>
+                        </div>
+
+                        <CustomButton
+                            onClick={() => deletePack(el._id)}
+                        >
+                            delete
+                        </CustomButton>
+                        <CustomButton
+                            onClick={changeEditId}
+                        >
+                            edit
+                        </CustomButton>
+
+                    </TableCell>
+                    :
+                    <TableCell align="right">
                         <CustomLink text={"learn"} address={`/learn/${el._id}`}/>
-                    </div>
+                    </TableCell>
+                }
 
-                    <CustomButton
-                        onClick={() => deletePack(el._id)}
-                    >
-                        delete
-                    </CustomButton>
-                    <CustomButton
-                        onClick={EditModeOn}
-                    >
-                        edit
-                    </CustomButton>
-
-                </TableCell>
-                :
-                <TableCell align="right">
-                    <CustomLink text={"learn"} address={`/learn/${el._id}`}/>
-                </TableCell>
-            }
-
-        </TableRow>
-    ))
+            </TableRow>
+        )
+    })
 
     return (
         <div>
