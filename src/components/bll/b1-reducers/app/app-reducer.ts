@@ -5,19 +5,35 @@ import {resError} from "../Errors";
 
 
 const initState = {
-    isFetching: false
+    isFetching: false,
+    popupMessages: [] as PopupMessageType[]
 }
 
+export type PopupMessageType = {
+    type: 'error' | 'success'
+    message: string
+    id: string
+}
 type AppInitStateType = typeof initState
 
 type AppActionType = SetIsFetchingAT
+    | SetPopupMessageAT
+    | DeletePopupMessageAT
 
-export const appReducer = (state: AppInitStateType = initState, action: AppActionType) => {
+export const appReducer = (state: AppInitStateType = initState, action: AppActionType): AppInitStateType => {
     switch (action.type) {
         case "APP/SET-IS-FETCHING":
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        case "APP/SET-POPUP-MESSAGE":
+            return {
+                ...state, popupMessages: [...state.popupMessages, action.message]
+            }
+        case "APP/DELETE-POPUP-MESSAGE":
+            return {
+                ...state, popupMessages: action.popupMessages
             }
         default:
             return state
@@ -32,6 +48,21 @@ export const setIsFetchingAC = (isFetching: boolean) => {
     } as const
 }
 
+export type SetPopupMessageAT = ReturnType<typeof setPopupMessageAC>
+export const setPopupMessageAC = (message: PopupMessageType) => {
+    return {
+        type: "APP/SET-POPUP-MESSAGE",
+        message
+    } as const
+}
+
+export type DeletePopupMessageAT = ReturnType<typeof deletePopupMessageAC>
+export const deletePopupMessageAC = (popupMessages: any) => {
+    return {
+        type: "APP/DELETE-POPUP-MESSAGE",
+        popupMessages
+    } as const
+}
 //THUNK
 
 export const isAuthUserT = () => async (dispatch: Dispatch) => {

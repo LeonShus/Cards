@@ -16,6 +16,7 @@ import {Header} from "./common/c2-components/c6-Header/Header";
 import {PacksList} from "./components/pages/p6-packs-list/packs-list";
 import { CardsPage } from "./components/pages/p5-cards/CardsPage";
 import {LearnCard} from "./components/pages/p7-learn-page/learn-card";
+import {SnackBar} from "./common/c2-components/c12-SnackBar/SnackBar";
 
 export const App = () => {
 
@@ -32,6 +33,7 @@ export const App = () => {
 
     return (
         <div className={styles.container}>
+            <SnackBar/>
             <HashRouter>
 
                 <Header/>
