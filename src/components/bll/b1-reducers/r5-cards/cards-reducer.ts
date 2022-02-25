@@ -1,7 +1,8 @@
-import {Dispatch} from "redux";
 import {cardsApi} from "../../../../dal/cardsApi";
 import {AppStateType} from "../../b2-store/store";
 import {ThunkAction} from "redux-thunk";
+import {setPopupMessageAC, SetPopupMessageAT} from "../app/app-reducer";
+import {v1} from "uuid";
 
 const initState = {
     cards: [],
@@ -63,22 +64,66 @@ export const setCardsTC = (cardsPackID: string): ThunkType =>
         const page = getState().cards.page
         cardsApi.getCards(cardsPackID, pageCount, page)
             .then((res) => {
-                    debugger
                     dispatch(setCards(res.data.cards, res.data.cardsTotalCount))
                 }
-            )
+            ).catch((e: any) => {
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'error',
+                        message: `${e.response.data.error}`,
+                        id: v1()
+                    }
+                ))
+            }
+        )
     }
 
 export const createCardTC = (cardsPack_id: string, question: string, answer: string): ThunkType =>
     dispatch => {
         cardsApi.createCard(cardsPack_id, question, answer)
-            .then(() => dispatch(setCardsTC(cardsPack_id)))
+            .then((res) => {
+                dispatch(setCardsTC(cardsPack_id))
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'success',
+                        message: `Card "${res.data.newCard.question}" created`,
+                        id: v1()
+                    }
+                ))
+            })
+            .catch((e: any) => {
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'error',
+                        message: `${e.response.data.error}`,
+                        id: v1()
+                    }
+                ))
+            })
     }
 
 export const deleteCardTC = (card_id: string): ThunkType =>
     dispatch => {
         cardsApi.deleteCard(card_id)
-            .then((res) => dispatch(setCardsTC(res.data.deletedCard.cardsPack_id)))
+            .then((res) => {
+                dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'success',
+                        message: `Card "${res.data.deletedCard.question}" deleted`,
+                        id: v1()
+                    }
+                ))
+            })
+            .catch((e: any) => {
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'error',
+                        message: `${e.response.data.error}`,
+                        id: v1()
+                    }
+                ))
+            })
     }
 export const changeCardTC = (card_id: string, question: string, answer: string): ThunkType =>
     dispatch => {
@@ -86,10 +131,18 @@ export const changeCardTC = (card_id: string, question: string, answer: string):
             .then((res) => {
                 dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
             })
+            .catch((e: any) => {
+                dispatch(setPopupMessageAC(
+                    {
+                        type: 'error',
+                        message: `${e.response.data.error}`,
+                        id: v1()
+                    }
+                ))
+            })
     }
 
 //Types
-//type InitStateType = typeof initState
 type InitStateType = {
     cards: Array<Cards>,
     cardsTotalCount: number,
@@ -104,7 +157,7 @@ type CardsActionType =
     | SetCardsPageAT
     | SetCardsPageCountAT
 
-type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType>
+type  ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionType | SetPopupMessageAT>
 export type Cards = {
     answer: string
     question: string
