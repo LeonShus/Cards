@@ -10,7 +10,7 @@ const initState = {
 }
 
 export type PopupMessageType = {
-    type: 'error' | 'success'
+    type: "error" | "success"
     message: string
     id: string
 }
@@ -86,7 +86,7 @@ export const logoutUserT = () => async (dispatch: Dispatch) => {
     try {
         dispatch(setIsFetchingAC(true))
         const res = await authApi.logout()
-        console.log(res)
+
         dispatch(setIsLoggedInAC(false))
         dispatch(setUserDataAC("", "", "", "", 0))
 

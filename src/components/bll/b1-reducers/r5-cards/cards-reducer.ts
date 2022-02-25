@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {cardsApi} from "../../../../dal/cardsApi";
 import {AppStateType} from "../../b2-store/store";
 import {ThunkAction} from "redux-thunk";
@@ -98,7 +97,7 @@ export const setCardsTC = (cardsPackID: string): ThunkType =>
             ).catch((e: any) => {
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'error',
+                        type: "error",
                         message: `${e.response.data.error}`,
                         id: v1()
                     }
@@ -114,7 +113,7 @@ export const createCardTC = (cardsPack_id: string, question: string, answer: str
                 dispatch(setCardsTC(cardsPack_id))
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'success',
+                        type: "success",
                         message: `Card "${res.data.newCard.question}" created`,
                         id: v1()
                     }
@@ -123,7 +122,7 @@ export const createCardTC = (cardsPack_id: string, question: string, answer: str
             .catch((e: any) => {
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'error',
+                        type: "error",
                         message: `${e.response.data.error}`,
                         id: v1()
                     }
@@ -138,7 +137,7 @@ export const deleteCardTC = (card_id: string): ThunkType =>
                 dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'success',
+                        type: "success",
                         message: `Card "${res.data.deletedCard.question}" deleted`,
                         id: v1()
                     }
@@ -147,7 +146,7 @@ export const deleteCardTC = (card_id: string): ThunkType =>
             .catch((e: any) => {
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'error',
+                        type: "error",
                         message: `${e.response.data.error}`,
                         id: v1()
                     }
@@ -159,11 +158,19 @@ export const changeCardTC = (card_id: string, question: string, answer: string):
         cardsApi.changeCard(card_id, question, answer)
             .then((res) => {
                 dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
+
+                dispatch(setPopupMessageAC(
+                    {
+                        type: "success",
+                        message: `Pack ${res.data.updatedCard.question} created`,
+                        id: v1()
+                    }
+                ))
             })
             .catch((e: any) => {
                 dispatch(setPopupMessageAC(
                     {
-                        type: 'error',
+                        type: "error",
                         message: `${e.response.data.error}`,
                         id: v1()
                     }

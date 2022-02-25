@@ -8,7 +8,7 @@ import {PackPaginator} from "./p4-packs-list-paginator/pack-paginator";
 import {AddPack} from "./p6-add-pack/add-pack";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../bll/b2-store/store";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 
 export const PacksList = () => {
@@ -23,7 +23,7 @@ export const PacksList = () => {
         setAddPack(false)
     }
 
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
         return <Navigate to={"/login"}/>
     }
 

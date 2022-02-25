@@ -80,7 +80,7 @@ export const sendCardGradeT = (grade: number, cardId: string) => async (dispatch
         const res = await cardsApi.updateGrade(grade, cardId)
 
         dispatch(setCardGradeAC(cardId, grade))
-        console.log(res)
+
     } catch (e) {
 
     } finally {

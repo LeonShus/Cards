@@ -153,12 +153,11 @@ export const setCardPacksTC = (): ThunkType => async (dispatch, getState) => {
         let res = await cardPacksApi.getCardPacks(userId, minCardsCount, maxCardsCount, sortPacks, page, pageCount, packNameForSearch)
 
         dispatch(setCardPacks(res.data.cardPacks, res.data.cardPacksTotalCount))
-        console.log(res)
 
     } catch (e: any) {
         dispatch(setPopupMessageAC(
             {
-                type: 'error',
+                type: "error",
                 message: e.response.data.error,
                 id: v1()
             }
@@ -177,7 +176,7 @@ export const createPackTC = (name: string, deckCover: string, privat: boolean): 
         dispatch(setCardPacksTC())
         dispatch(setPopupMessageAC(
             {
-                type: 'success',
+                type: "success",
                 message: `Pack ${res.data.newCardsPack.name} created`,
                 id: v1()
             }
@@ -185,7 +184,7 @@ export const createPackTC = (name: string, deckCover: string, privat: boolean): 
     } catch (e: any) {
         dispatch(setPopupMessageAC(
             {
-                type: 'error',
+                type: "error",
                 message: e.response.data.error,
                 id: v1()
             }
@@ -203,7 +202,7 @@ export const deletePackTC = (packId: string): ThunkType => async (dispatch) => {
         let res = await cardPacksApi.deleteCardsPack(packId)
         dispatch(setPopupMessageAC(
             {
-                type: 'success',
+                type: "success",
                 message: `Pack ${res.data.deletedCardsPack.name} deleted`,
                 id: v1()
             }
@@ -213,7 +212,7 @@ export const deletePackTC = (packId: string): ThunkType => async (dispatch) => {
     } catch (e: any) {
         dispatch(setPopupMessageAC(
             {
-                type: 'error',
+                type: "error",
                 message: e.response.data.error,
                 id: v1()
             }
@@ -231,7 +230,7 @@ export const changePackTC = (packId: string, name: string): ThunkType => async (
         dispatch(setCardPacksTC())
         dispatch(setPopupMessageAC(
             {
-                type: 'success',
+                type: "success",
                 message: `Pack ${res.data.updatedCardsPack.name} changed`,
                 id: v1()
             }
@@ -239,7 +238,7 @@ export const changePackTC = (packId: string, name: string): ThunkType => async (
     } catch (e: any) {
         dispatch(setPopupMessageAC(
             {
-                type: 'error',
+                type: "error",
                 message: e.response.data.error,
                 id: v1()
             }

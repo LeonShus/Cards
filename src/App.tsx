@@ -14,7 +14,7 @@ import {AppStateType} from "./components/bll/b2-store/store";
 import {Preloader} from "./common/c2-components/c4-Preloader/Preloader";
 import {Header} from "./common/c2-components/c6-Header/Header";
 import {PacksList} from "./components/pages/p6-packs-list/packs-list";
-import { CardsPage } from "./components/pages/p5-cards/CardsPage";
+import {CardsPage} from "./components/pages/p5-cards/CardsPage";
 import {LearnCard} from "./components/pages/p7-learn-page/learn-card";
 import {SnackBar} from "./common/c2-components/c12-SnackBar/SnackBar";
 

@@ -9,6 +9,8 @@ import {sendCardGradeT, setCardsToLearnT} from "../../bll/b1-reducers/r6-learnCa
 import {AppStateType} from "../../bll/b2-store/store";
 import {Cards} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import {Preloader} from "../../../common/c2-components/c4-Preloader/Preloader";
+import {setPopupMessageAC} from "../../bll/b1-reducers/app/app-reducer";
+import {v1} from "uuid";
 
 const rateYourself = ["Did not Know", "Forgot", "A lot of Thought", "Confused", "Knew the answer"]
 
@@ -21,7 +23,7 @@ const getCard = (cards: Cards[]) => {
             return {sum: newSum, id: newSum < rand ? i : acc.id}
         }
         , {sum: 0, id: -1});
-    console.log("test: ", sum, rand, res)
+    // console.log("test: ", sum, rand, res)
 
     return cards[res.id + 1];
 }
@@ -69,7 +71,13 @@ export const LearnCard = () => {
             dispatch(sendCardGradeT(grade, card._id))
             setCard(getCard(cards));
         } else {
-            console.log("some error")
+            dispatch(setPopupMessageAC(
+                {
+                    type: "error",
+                    message: "some error",
+                    id: v1()
+                }
+            ))
         }
         setShowAnswer(false)
     }
@@ -99,7 +107,6 @@ export const LearnCard = () => {
     if (isFetching) {
         return <Preloader/>
     }
-    console.log(isFetching)
     return (
 
         <div className={styles.container}>
