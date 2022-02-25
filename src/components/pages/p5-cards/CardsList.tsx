@@ -74,10 +74,22 @@ export const CardsList = (props: PropsType) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell onClick={() => sortCardsHandler('question')}>Question</TableCell>
-                            <TableCell onClick={() => sortCardsHandler('answer')}>Answer</TableCell>
-                            <TableCell onClick={() => sortCardsHandler('update')}>Last Updated</TableCell>
-                            <TableCell onClick={() => sortCardsHandler('grade')}>Grade</TableCell>
+                            <TableCell>
+                                <span className={styles.item} onClick={() => sortCardsHandler('question')}
+                                >Question</span>
+                            </TableCell>
+                            <TableCell>
+                                <span className={styles.item} onClick={() => sortCardsHandler('answer')}>
+                                    Answer</span>
+                            </TableCell>
+                            <TableCell>
+                                <span className={styles.item} onClick={() => sortCardsHandler('update')}>
+                                    Last Updated</span>
+                            </TableCell>
+                            <TableCell>
+                                <span className={styles.item} onClick={() => sortCardsHandler('grade')}>
+                                    Grade</span>
+                            </TableCell>
                             {userId === props.cards[0].user_id && <TableCell>Actions</TableCell>}
                         </TableRow>
                     </TableHead>
