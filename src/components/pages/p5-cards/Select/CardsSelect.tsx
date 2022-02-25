@@ -1,11 +1,8 @@
 import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/b2-store/store";
-import {setCardsPageCount, SetCardsPageCountAT} from "../../../bll/b1-reducers/r5-cards/cards-reducer";
+import {setCardsPageCount} from "../../../bll/b1-reducers/r5-cards/cards-reducer";
 import NativeSelect from '@mui/material/NativeSelect/NativeSelect';
 import Box from '@mui/material/Box/Box';
 
@@ -21,8 +18,8 @@ export function CardSelect() {
         <Box sx={{minWidth: 50}}>
             <FormControl >
                 <NativeSelect
-                    onChange={handleChange}>
-                    defaultValue={pageCount}
+                    onChange={handleChange} defaultValue={pageCount}>
+
                     <option value={4}>4</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>

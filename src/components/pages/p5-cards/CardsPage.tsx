@@ -2,7 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {AppStateType} from "../../bll/b2-store/store";
-import {Cards, createCardTC, setCards, setCardsTC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
+import {
+    Cards,
+    createCardTC,
+    setCards,
+    setCardsPageCount,
+    setCardsTC
+} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import {CardsList} from "./CardsList";
 import styles from "./CardsPage.module.scss"
 import {CardPagination} from "./Pagination/CardsPagination";
@@ -21,15 +27,13 @@ export const CardsPage = () => {
     const isLoggedIn = useSelector<AppStateType, boolean>(state => state.login.isLoggedIn)
     const userId = useSelector<AppStateType, string>((state) => state.login.userData._id)
     const packUserId = useSelector<AppStateType, string>((state) => state.cards.packUserId)
+    const sortCards = useSelector<AppStateType, string>((state) => state.cards.sortCards)
     const {id} = useParams()
     useEffect(() => {
         if (id) {
             dispatch(setCardsTC(id))
         }
-        return () => {
-            dispatch(setCards([], cardsTotalCount, ''))
-        }
-    }, [pageCount, page])
+    }, [pageCount, page, sortCards])
 
     const addCardBtn = () => {
         if (id) {

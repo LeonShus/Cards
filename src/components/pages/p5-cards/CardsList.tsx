@@ -1,5 +1,5 @@
-import React from "react";
-import {Cards, changeCardTC, deleteCardTC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
+import React, {useState} from "react";
+import {Cards, changeCardTC, deleteCardTC, setSortCardsAC} from "../../bll/b1-reducers/r5-cards/cards-reducer";
 import styles from "./CardsList.module.scss";
 import {Preloader} from "../../../common/c2-components/c4-Preloader/Preloader";
 import TableContainer from "@mui/material/TableContainer";
@@ -52,16 +52,32 @@ export const CardsList = (props: PropsType) => {
 
         </TableRow>
     ))
+    let [sortValue, setSortValue] = useState<Array<string>>([])
+    let arr: Array<string> = []
+    let number = 0
+    const sortCardsHandler = (value: string) => {
+        if (sortValue.find(v => v === value)) {
+            let newSortValue = sortValue.filter(v => v !== value)
+            setSortValue(newSortValue)
+            number = 0
+        } else {
+            let newSortValue = [...sortValue, value]
+            setSortValue(newSortValue)
+            number = 1
+        }
+        dispatch(setSortCardsAC(number + value))
+
+    }
     return (
         <div className={styles.container}>
             <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Question</TableCell>
-                            <TableCell>Answer</TableCell>
-                            <TableCell>Last Updated</TableCell>
-                            <TableCell>Grade</TableCell>
+                            <TableCell onClick={() => sortCardsHandler('question')}>Question</TableCell>
+                            <TableCell onClick={() => sortCardsHandler('answer')}>Answer</TableCell>
+                            <TableCell onClick={() => sortCardsHandler('update')}>Last Updated</TableCell>
+                            <TableCell onClick={() => sortCardsHandler('grade')}>Grade</TableCell>
                             {userId === props.cards[0].user_id && <TableCell>Actions</TableCell>}
                         </TableRow>
                     </TableHead>

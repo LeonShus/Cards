@@ -1,5 +1,6 @@
 import axios from "axios"
 import {CardPacks} from "../components/bll/b1-reducers/r4-packs/packs-reducer";
+import {useParams} from "react-router-dom";
 
 const instance = axios.create({
     // baseURL: "https://neko-back.herokuapp.com/2.0/",
@@ -62,8 +63,9 @@ type GetPacksResponseType = {
 }
 
 export const cardsApi = {
-    getCards(cardsPackID: string, pageCount:number, page:number) {
-        return instance.get(`/cards/card?cardsPack_id=${cardsPackID}&pageCount=${pageCount}&page=${page}`)
+    getCards(cardsPack_id: string, pageCount:number, page:number, sortCards:string) {
+        //return instance.get(`/cards/card?cardsPack_id=${cardsPackID}&pageCount=${pageCount}&page=${page}&sortCards=${sortCards}`)
+        return instance.get(`/cards/card`, {params: {cardsPack_id, pageCount, page, sortCards}})
     },
     createCard(cardsPack_id: string, question: string, answer: string) {
         return instance.post(`/cards/card`, {card: {cardsPack_id, question, answer}})
