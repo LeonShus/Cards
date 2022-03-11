@@ -7,7 +7,6 @@ import {ProfilePage} from "./components/pages/p2-profile/profile-page";
 import {CreateNewPassPage} from "./components/pages/p1- loginization/l4-create-new-pass/create-new-pass-page";
 import {PassRecoveryPage} from "./components/pages/p1- loginization/l3-pass-recovery/pass-recovery-page";
 import {Error404Page} from "./components/pages/p3-error/error404-page";
-import {TestPage} from "./components/pages/p4-test/test-page";
 import {useDispatch, useSelector} from "react-redux";
 import {isAuthUserT} from "./components/bll/b1-reducers/app/app-reducer";
 import {AppStateType} from "./components/bll/b2-store/store";
@@ -47,7 +46,6 @@ export const App = () => {
                         <Route path={"password-recovery"} element={<PassRecoveryPage/>}/>
                         <Route path={"new-pass/:token"} element={<CreateNewPassPage/>}/>
                         <Route path={"error"} element={<Error404Page/>}/>
-                        <Route path={"test"} element={<TestPage/>}/>
                         <Route path={"packs-list"} element={<PacksList/>}/>
                         <Route path={"cards/:id"} element={<CardsPage/>}/>
                         <Route path={"learn/:cardPackId"} element={<LearnCard/>}/>

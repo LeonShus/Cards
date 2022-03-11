@@ -48,8 +48,9 @@ export const PacksList = () => {
                         <PackTable/>
                     </div>
 
-                    <PackPaginator/>
-
+                    <div className={styles.paginatorContainer}>
+                        <PackPaginator/>
+                    </div>
                 </div>
             </div>
         </div>

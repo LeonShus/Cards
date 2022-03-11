@@ -50,9 +50,14 @@ export const CardsPage = () => {
                 {wantToAdd && <AddCardModal closeModal={closeModal}/>}
 
                 {userId === packUserId &&
-                <CustomButton onClick={openModal}>
-                    Create Card
-                </CustomButton>
+                    <div className={styles.createBtn}>
+                        <CustomButton
+                            onClick={openModal}
+                        >
+                            Create Card
+                        </CustomButton>
+                    </div>
+
                 }
             </div>
             {isCardsFetch ? <Preloader/> : cards.length !== 0 ? <CardsList cards={cards}/> : <div>Not cards</div>}

@@ -1,0 +1,13 @@
+@import "../../../common/c1-styles/sass/variables";
+@import "../../../common/c1-styles/sass/mixins";
+
+.container {
+  @include contentBox(column, center, 25px);
+  img{
+    width: 200px;
+  }
+  .userInfo{
+    margin-top: 16px;
+    font-size: 1.5rem;
+  }
+}

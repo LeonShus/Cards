@@ -140,21 +140,23 @@ export const LearnCard = () => {
                     </div>
                 </>
             }
+            <div className={styles.btnContainer}>
+                {
+                    !showAnswer
+                        ?
+                        <CustomButton onClick={answerReady}>
+                            Show Answer
+                        </CustomButton>
+                        :
+                        <CustomButton
+                            onClick={nextQuestion}
+                            disabled={isFetching}
+                        >
+                            Next
+                        </CustomButton>
+                }
+            </div>
 
-            {
-                !showAnswer
-                    ?
-                    <CustomButton onClick={answerReady}>
-                        Show Answer
-                    </CustomButton>
-                    :
-                    <CustomButton
-                        onClick={nextQuestion}
-                        disabled={isFetching}
-                    >
-                        Next
-                    </CustomButton>
-            }
 
         </div>
     )
